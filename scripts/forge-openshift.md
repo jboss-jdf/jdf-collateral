@@ -1,0 +1,100 @@
+Assumptions
+===========
+
+* Forge 1.0.0.Beta3 setup (<http://jboss.org/forge>)
+* OpenShift Express tools installed, account created, domain set up (<http://openshift.com>)
+
+Steps to run Forge to create a simple app
+================================================
+
+1. Download and Unzip the Forge distribution into a folder (like where you put maven.)
+2. Run `bin/forge` (unix) or `bin/forge.bat` (windows)
+3. Create a new Project with JPA `new-project --named acme --topLevelPackage`
+4. Import into Eclipse
+4. Add CDI `beans setup`
+5. Add JPA `persistence setup --provider HIBERNATE --container JBOSS_AS7` and don't add custom apis
+5. Add Bean Validation `validation setup --provider HIBERNATE_VALIDATOR`
+5. Add JSF `faces setup`
+6. Add the Member entity `entity --named Member --package com.acme.model`
+7. Add these fields with constrains via Eclipse
+
+        @Id GeneratedValue(strategy = GenerationType.AUTO)
+        @Column(name = "id", updatable = false, nullable = false)
+        private Long id = null;
+         
+        @Version @Column(name = "version")
+        private int version = 0;
+        
+        @Column
+        @Size(min = 1, max = 25) @NotNull
+        private String name;
+        
+        @Column
+        @NotNull
+        private String email;
+        
+        @Column
+        @Digits(integer = 12, fraction = 0) @NotNull @Size(min = 10, max = 12)
+        private String phoneNumber;
+
+12. Add scaffolding `scaffold setup`
+13. Scaffold from entity `scaffold from-entity com.acme.model.Member.java`
+13. `rest setup`
+14. `rest endpoint-from-entity com.acme.model.Member.java`
+14. Built it `build`
+15. Start JBoss AS 7.0.1 (7.0.2 is broken for JSF resources + JNDI binding)
+16. Deploy it `as7 deploy`
+
+Deploy to OpenShift Express
+===========================
+
+1. `rhc-express setup`
+4. Add the files to deploy to openshift `git add src pom.xml`
+5. Push the files to openshift `rhc-express deploy`
+6. Paste url from openshift setup into web browser
+
+Deploy to Flex
+==============
+
+1. `rhc-flex setup`
+2. `rhc-flex deploy`
+3. `rhc-flex start-application`
+4. Go to the flex console <https://openshift.redhat.com/flex/flex/index.html> and click on "Clusters", find the cluster DNS, and go to <ClusterDNS>/acme
+
+Add MySQL (Amazon RDS) to Express deployment
+============================================
+
+1. Have RDS set up and created with a user `acme`, password `abcdef`  and database `acme`
+2. Get the RDS hostname/ip
+3. Start MySQL consone locally `mysql5 -h <rds hostname/ip> -u <username> -p` and `use acme`. We will use this to check that data is added to the database
+4. In forge, `edit .openshift/config/standalone.xml`
+5. Locate the `MySQLDS`
+6. Change the `connection-url` to `jdbc:mysql://<rds hostname/ip>:3366/acne`
+7. Change the `username` to `acme` and the password to `abcdef` and save the file
+8. In forge, `edit src/main/resources/persistence.xml` and set the DS to `java:jboss/datasources/MySQLDS` and change the `hbm2ddl` property to `create`
+9. In forge `rhc-express deploy`
+10. Visit the app, and add an entry
+11. `select * from Member;`
+12. Now, set `hbm2ddl` in `src/main/resources/persistence.xml` to `none`
+
+Use Jenkins with Express to manage builds
+=========================================
+
+(Note I haven't got this bit to work reliably yet so test it a few times)
+
+Here we use an easily installed Jenkins to do builds. It takes up one slot of our 5 on OpenShift. This means your build runs in a jail, and doesn't steal resources from a running app. The app will stay up, and only get replaced if the build succeeds. It also gives you a record of builds. Returns control of console immediately. Good for >1 person working on app.
+
+1. Create the Jenkins CDI monitor `rhc-create-app -a jeninks -t jenkins-1.4 -n` and go to `jenkins-<openshift-domain>.rhcloud.com`
+2. Run `rhc-ctl-app -a acme -e add-jenkins-client-1.4` to add the jenkins client to our app (pushes build to jenkins)
+3. Make a change to the app e.g. `index.xhtml`
+4. `rhc-express deploy`
+5. Open up the jenkins page and show the node coming, show existing app still up
+6. Wait a while (node starting, deps downloading)
+7. Show the build succeeding
+8. Introduce a build error and show this failing to deploy - create `AcmeTest.java` class in `src/main/test`
+9. Add junit to the POM as a dependency
+10. Add an test that does `Assert.fail()`
+11. In forge `git add src/test` and then `rhc-express deploy`
+12. Go to Jenkins and login (password given when you created the instance)
+13. Edit the build and remove `-DskipTests`
+14. Show the build failing.
