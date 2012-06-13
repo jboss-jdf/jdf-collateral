@@ -44,6 +44,7 @@ layout: reveal
     %li HTML5 & JS
     %li RAD - generating the CRUD
 
+
 %section
   %h2 Architecture
   %img.diagram(src="#{site.base_url}/images/ticketmonster_architecture.png" width="800")
@@ -57,13 +58,36 @@ layout: reveal
 %section
   %h2 Demo
 
-%section 
-  %h2 End-user use cases
-  %img.diagram(src="#{site.base_url}/images/user_use_cases.png" width="800")
+%section
+  %section
+    %h2 What is TicketMonster?
+    %ul
+      %li Medium-complex business application
+      %li Business domain: online ticketing
+      %li Demo application for JBoss Developer Framework
+      %li Different functionalities == different technologies
 
-%section 
-  %h2 Administration use cases
-  %img.diagram(src="#{site.base_url}/images/admin_use_cases.png" width="800")
+	 
+  %section
+    %h3 What can end-users do?
+    %img.diagram(src="#{site.base_url}/images/user_use_cases.png" width="700")
+
+  %section
+    %h3 Key points (End-User)
+    %ul
+      %li Smooth interaction (no flicker)
+      %li Fast response
+      %li Mobile ready
+
+  %section 
+    %h3 What can admins do?
+    %img.diagram(src="#{site.base_url}/images/admin_use_cases.png" width="700")
+
+  %section
+    %h3 Key points (End-User)
+    %ul
+      %li Easy CRUD
+      %li Real-time status updates
 
 %section
   %h2 HTML5 Architecture
