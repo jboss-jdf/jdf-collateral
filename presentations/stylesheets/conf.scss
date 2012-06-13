@@ -29,13 +29,62 @@
  background: none;
 }
 
-.reveal ul {
- list-style: none;
+.reveal {
+
+ section {
+  text-align: left;
+ }
+
+ blockquote::before {
+  content: '';
+ }
+
+ blockquote::after {
+  content: '';
+ }
+
+ section {
+  img {
+   margin-left:auto;
+   margin-right:auto;
+   display: block;
+   border: none;
+   background:none;
+   -webkit-box-shadow: none;
+   -moz-box-shadow: none;
+   box-shadow: none;
+
+  }
+
+  .bottom {
+   bottom: 0;
+   position: absolute;
+  }
+
+  .red {
+   color: #C00;
+  }
+
+  img.diagram {
+   border: 4px solid #eee;
+   background: rgba(255,255,255,0.12);
+   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  }
+ }
 }
 
 ul.intro {
  margin-top: 50px;
  list-style: none;
+
+ ul {
+  list-style: none;
+  li {
+   font-size: .7em;
+  }
+ }
 }
 
 .reveal section img.splash, .reveal section .footer img {
