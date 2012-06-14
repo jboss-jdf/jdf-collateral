@@ -1,6 +1,47 @@
 TicketMonster walkthrough
 =========================
 
+Demo walkthrough
+----------------
+
+Client walkthrough on BrowserSim + OpenShift
+
+1. Book ticket
+
+Explanation of POH5 architecture
+--------------------------------
+
+* Single page application - loaded all in one step
+* Interacts with the backend via JAX-RS
+* Two variants - mobile and desktop
+** Different structures due to look and feel, layout and flow through app
+** Mobile apps need to be more functional due to limited screen real estate
+* Libraries used
+** JQuery - base
+** Backbone provides app structure, client side MVC framework
+** Underscore (dependency of backbone) adds utilities, smart finders, templating etc.
+** Bootstrap for look and feel and UI components
+* Templates are split out into resources/templates/template.html
+** Common design pattern for Backbone/JS
+* Backbone gives you a fairly traditional client side structure if you understand MVC
+* Still plan to add require to give a more modular server side structure (backbone gives modular client side) - better code org!
+* Backbone gives us:
+** Models
+*** data holders
+*** mapped to a REST endpoint
+*** does CRUD automatically
+*** can attach event handlers to listen for data changes to model (e.g. produced by inputs)
+** Collections
+*** Collections of models
+*** Can receive events (e.g. model destroyed) for models they hold
+** Views
+*** has a render method to manipulate dom - apply the templates
+**** can handle browser events via mapping to methods
+** Router
+*** Browser nav leads to method called
+*** Backbone gives you REST like urls (after hash)
+
+
 Prerequisites
 -------------
 
