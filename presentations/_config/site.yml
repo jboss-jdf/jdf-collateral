@@ -1,7 +1,6 @@
 profiles:
   development:
+  staging:
+    base_url: http://jboss.org/jdf/presentations/stage
   production:
-    base_url: http://jboss.org/jdf/collateral
-    deploy:
-      host: filemgmt.jboss.org
-      path: /www_htdocs/jdf/collateral
+    base_url: http://jboss.org/jdf/presentations
