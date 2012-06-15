@@ -1,0 +1,17 @@
+%li
+  %img.icon(src="#{site.base_url}/images/glyphicons/glyphicons_050_link.png")
+  %a(href="http://jboss.org/developer") http://jboss.org/developer
+%li
+  %img.icon(src="#{site.base_url}/images/glyphicons/glyphicons_050_link.png")
+  %a(href="http://jboss.org/jdf") http://jboss.org/jdf
+%li
+  %img.icon(src="#{site.base_url}/images/glyphicons/glyphicons_392_twitter.png")
+  %a(href="https://twitter.com/#!/jbossdeveloper") @jbossdeveloper
+
+-if page.authors
+  - page.authors.each do |author|
+    - if author.twitter_handle
+      %li 
+        %img.icon(src="#{site.base_url}/images/glyphicons/glyphicons_392_twitter.png")
+        %a(href="http://twitter.com/#!/#{author.twitter_handle}") @#{author.twitter_handle}
+
