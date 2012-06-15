@@ -40,6 +40,7 @@ $mid_grey_transparent: rgba(170, 170, 170, .8);
   text-align: left;
 
   blockquote {
+   margin: 25px auto;
    p {
     margin: 12px;
     margin-bottom: 22px;
@@ -99,6 +100,10 @@ $mid_grey_transparent: rgba(170, 170, 170, .8);
    right: 0;
   }
 
+  .center-text {
+    text-align: center;
+  }
+
   img.diagram {
    border: 3px solid $mid_grey;
    background: rgba(255,255,255,0.95);
@@ -139,7 +144,8 @@ $mid_grey_transparent: rgba(170, 170, 170, .8);
  -webkit-box-shadow: none;
     -moz-box-shadow: none;
          box-shadow: none;
-
+ max-width: 800px;
+ max-height: 560px;
 }
 
 .reveal .images {
