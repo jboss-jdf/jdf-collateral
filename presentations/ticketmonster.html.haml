@@ -1,26 +1,20 @@
 ---
-title: Building Modern Applications the JBoss Way
-author: Pete Muir, Marius Bogoevici
+title: Building Modern Applications
+subtitle: with JBoss Developer Framework
+splash: summit.png
+authors: 
+  - name: Pete Muir
+    role: Principal Software Engineer
+    company: Red Hat, Inc.
+  - name: Marius Bogoevici
+    role: Principal Software Engineer
+    company: Red Hat, Inc.
 description: Building Modern Application the JBoss Way, using JBoss Developer Framework
 
 layout: reveal_presentation
 ---
 
-%section
-  %img.splash(src="#{site.base_url}/images/summit.png")
-
-%section
-  .intro
-    :markdown
-      ## Building Modern Applications 
-      ### with JBoss Developer Framework
-      
-      June 2012
-      
-      * Pete Muir 
-        * Principal Software Engineer, Red Hat, Inc.
-      * Marius Bogoevici 
-        * Senior Software Engineer, Red Hat, Inc.
+= partial('title.html.haml', {'parent'=>page})
 
 %section
   %h2 Session Objective
@@ -43,10 +37,7 @@ layout: reveal_presentation
     * HTML5 & JS
     * RAD - generating the CRUD
 
-
-%section
-  %h2 Architecture
-  %img.diagram(src="#{site.base_url}/images/ticketmonster_architecture.png" width="800")
+= partial ( 'ticketmonster_architecture.html.haml' )
 
 %section
   :markdown
@@ -59,55 +50,15 @@ layout: reveal_presentation
   %h2 Demo
   %img(src="#{site.base_url}/images/ticketmonster_screenshot.png" width="800")
 
-%section
-  %section
-    :markdown
-      ## What is TicketMonster?
-    
-      * Online ticketing application
-      * Medium complexity 
-      * Demonstrates a choice of view layers
-    %img.floatright.bottommargin50(src="#{site.base_url}/images/ticket.jpg")
+= partial 'what_is_ticketmonster.html.haml'
 
-  %section
-    %h3 What can end-users do?
-    %img.diagram(src="#{site.base_url}/images/user_use_cases.png" width="700")
-
-  %section
-    :markdown
-      ### End-User requirements
-    
-      * Smooth interaction (no flicker!)
-      * Fast response
-      * Mobile and tablet usage
-
-  %section 
-    %h3 What can admins do?
-    %img.diagram(src="#{site.base_url}/images/admin_use_cases.png" width="700")
-
-  %section
-    :markdown
-      ## Admin requirements
-    
-      * Easy CRUD
-      * Real-time status updates
-
-%section
-  %h2 HTML5 Architecture
-  %img.diagram(src="#{site.base_url}/images/ticketmonster_html5_architecture.png" width="600")
+= partial 'html5_architecture.html.haml'
 
 %section
   %h2 Demo deep dive
   %img(src="#{site.base_url}/images/ticketmonster_screenshot.png" width="800")  
 
-%section
-  %h2.bottom.red Can I get support?
-
-%section
-  %img.bottom(src="#{site.base_url}/images/as7_to_eap.png" width="800")
-
-%section
-  %img.diagram(src="#{site.base_url}/images/subscriptions.png" width="800")
+= partial 'can_i_get_support.html.haml'
 
 %section
   %h2 Q&A
