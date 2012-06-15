@@ -47,6 +47,16 @@ $mid_grey_transparent: rgba(170, 170, 170, .8);
    }
   }
 
+  a:not(.image) {
+   color: white;
+  }
+
+  a:hover {
+   text-decoration: underline;
+   background: none !important;
+   color: white !important;
+  }
+
   blockquote::before {
    content: '';
   }
@@ -65,6 +75,14 @@ $mid_grey_transparent: rgba(170, 170, 170, .8);
    -moz-box-shadow: none;
    box-shadow: none;
 
+  }
+
+  img.icon {
+   margin: 0px;
+   border: 0px;
+   padding: 0px;
+   display: inline;
+   vertical-align: middle;
   }
 
   h1, h2, h3 {
@@ -121,17 +139,25 @@ $mid_grey_transparent: rgba(170, 170, 170, .8);
    }
   }
 
-  .intro {
-   ul {
-    margin-top: 50px;
-    list-style: none;
+  ul.resources {
+   list-style: none;
+  }
 
-    ul {
-     margin-top: 0px;
-     list-style: none;
-     li {
-      font-size: .7em;
-     }
+  .authors {
+   margin-top: 50px;
+   .author {
+    margin-top: 0px;
+    position: relative;
+    .role {
+     font-size: .7em;
+     margin-bottom: 0px;
+     margin-left: 50px;
+    }
+    .handle {
+     position: absolute;
+     top: 0px;
+     right: 0px;
+     font-size: .7em;
     }
    }
   }
