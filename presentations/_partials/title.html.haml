@@ -7,15 +7,15 @@
     - if page.subtitle
       %h3= page.subtitle
       
-      - if page.presentation_date
-        %div
-          %time= page.presentation_date.strftime('%B %Y')
- 
-      -if page.authors
-        %ul
-          - page.authors.each do |author|
-            %li 
-              = author.name
-              %ul
-                %li #{author.role}, #{author.company}
+    - if page.presentation_date
+      %div
+        %time= page.presentation_date.strftime('%B %Y')
+
+    -if page.authors
+      %ul
+        - page.authors.each do |author|
+          %li 
+            = author.name
+            %ul
+              %li #{author.role}, #{author.company}
 
