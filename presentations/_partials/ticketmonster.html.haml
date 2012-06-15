@@ -1,20 +1,10 @@
 ---
 title: Building Modern Applications
 subtitle: with JBoss Developer Framework
-splash: summit.png
-authors: 
-  - name: Pete Muir
-    role: Principal Software Engineer
-    company: Red Hat, Inc.
-  - name: Marius Bogoevici
-    role: Principal Software Engineer
-    company: Red Hat, Inc.
 description: Building Modern Application the JBoss Way, using JBoss Developer Framework
-
-layout: reveal_presentation
 ---
 
-= partial('title.html.haml', {'parent'=>page})
+= partial('title.html.haml', {'title'=>page.title, 'subtitle'=>page.subtitle, 'authors'=>page.parent.authors, 'splash'=>page.parent.splash, 'presentation_date'=>page.parent.presentation_date})
 
 %section
   %h2 Session Objective
@@ -37,7 +27,7 @@ layout: reveal_presentation
     * HTML5 & JS
     * RAD - generating the CRUD
 
-= partial ( 'ticketmonster_architecture.html.haml' )
+= partial 'ticketmonster_architecture.html.haml'
 
 %section
   :markdown
@@ -69,3 +59,4 @@ layout: reveal_presentation
       %a(href="http://jboss.org/jdf") http://jboss.org/jdf
     %li
       %a(href="https://twitter.com/#!/jbossdeveloper") @jbossdeveloper
+

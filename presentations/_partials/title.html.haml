@@ -1,18 +1,19 @@
 %section
-  %img.splash(src="#{site.base_url}/images/#{page.parent.splash}")
+  %img.splash(src="#{site.base_url}/images/#{page.splash}")
 
 %section
   .intro
-    %h2= page.parent.title
-    - if page.parent.subtitle
-      %h3= page.parent.subtitle
+    %h2= page.title
+    - if page.subtitle
+      %h3= page.subtitle
       
-      %div
-        %time= Date.today.strftime('%B %Y')
+      - if page.presentation_date
+        %div
+          %time= page.presentation_date.strftime('%B %Y')
  
-      -if page.parent.authors
+      -if page.authors
         %ul
-          - page.parent.authors.each do |author|
+          - page.authors.each do |author|
             %li 
               = author.name
               %ul
