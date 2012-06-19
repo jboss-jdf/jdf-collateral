@@ -31,10 +31,10 @@ description: "You've heard about the JBoss Way, and you like what you see. The J
   %blockquote
     :markdown
       JBoss Developer Framework shows you how to write applications using JBoss technologies
-  :markdown
-    * Learn how to write an application suitable for mobile 
-    * Learn how to use the Java EE 6 API with JBoss AS
-    * Learn how to add the power of CDI to your browser
+
+      * Learn how to write an application suitable for mobile 
+      * Learn how to use the Java EE 6 API with JBoss AS
+      * Learn how to add the power of CDI to your browser
 
 %section
   :markdown
@@ -60,17 +60,230 @@ description: "You've heard about the JBoss Way, and you like what you see. The J
     %h2 Demo
     %img(src="#{site.base_url}/images/ticketmonster_screenshot.png" width="800")
   
-  = partial 'ticketmonster_architecture.html.haml'
+= partial 'what_is_ticketmonster.html.haml'
 
-  = partial 'what_is_ticketmonster.html.haml'
+= partial 'ticketmonster_architecture.html.haml' 
 
-  = partial 'html5_architecture.html.haml'
+= partial 'html5_architecture.html.haml'
 
 %section
-  %h2 Roadmap 
+  %h2 jdf Roadmap
+  .pull-left
+    :markdown
+      #### jdf 2.0
 
-  TODO
+      Tentatively November 2012
 
+      * DeltaSpike
+      * Security
+      * Mobile Native & Offline Data
+      * Data Grids 
+  .pull-left{:style=>"margin-left:2em;"}
+    :markdown
+      #### jdf 2.next
+
+      Tentatively June 2013
+
+      * More DeltaSpike
+      * SSO (PicketLink)
+      * Social (Agorava)
+      * jbpm & Drools
+%section
+  %section
+    %h2 Apache DeltaSpike 
+    %p
+      DeltaSpike closes the gaps in Java EE 6.  
+    %blockquote.fragment.centered
+      We believe the community can create awesome CDI extensions and easily share them.  
+    %ul.fragment
+      %li Fragmentation
+      %li Duplicate work
+      %li location?  
+  %section
+    %h2 DeltaSpike (current) Features
+    %h3 v0.1-incubating
+    %ul
+      %li SE compatibility
+      %li Utilities
+      %li Author tools
+  %section
+    %h2 v0.1-incubating
+    %h4 Project Stage
+    %pre
+      %code.java
+        :escaped
+              @Inject ProjectStage projectStage;
+          ...
+          if (ProjectStage.Developement.equals(this.projectStage)) {
+            // execute during development
+          }
+    %h4 Exclude
+    %pre
+      %code.java
+        :plain
+              @Exclude(ifProjectStage = ProjectStage.Development.class)
+          public class MyBean { }
+
+          @Exclude(onExpression = "db==prodDB")
+          public class DevDbBean { } 
+    %h4 Config
+    %pre
+      %code.java
+        :plain
+              @ApplicationScoped
+          public class SettingsBean implements Deactivatable {
+              @Inject @ConfigProperty(name = "property1")
+              private Integer intProperty1;
+              //...
+          }
+  %section
+    %h2 v0.1-incubating (cont)
+    %h4 AnnotationInstanceProvider
+    %pre
+      %code.java
+        :escaped
+              Map<String, Object> memberVals = new HashMap<String, Object>();
+          memberVals.put("booleanValue", false);
+          memberVals.put("byteValues", new byte[]{(byte) 0});
+          memberVals.put("type", Object.class);
+
+          TestAnnotation annotation = AnnotationInstanceProvider.of(TestAnnotation.class, memberVals);
+    %h4 AnnotatedTypeBuilder
+    %pre
+      %code.java
+        :plain
+              AnnotatedTypeBuilder builder = new AnnotatedTypeBuilder();
+        builder.readFromType(beanClass);
+        
+        String beanName = namedAnnotation.value();
+        String newBeanName = beanName.substring(0, 1).toLowerCase() + beanName.substring(1);
+        
+        builder.removeFromClass(Named.class).addToClass(new NamedLiteral(newBeanName));
+
+        processAnnotatedType.setAnnotatedType(builder.create());
+    %h4 BeanProvider
+    %pre
+      %code.java
+        :plain
+              MyBean bean = BeanProvider.getContextualReference("myBean", false, MyBean.class);
+          MyBean bean = BeanProvider.getContextualReference(MyBean.class, false, new QualifierLiteral());
+          Object bean = BeanProvider.getContextualReference("myBean", false);
+          List<MyServiceInterface> myServices = BeanProvider.getContextualReferences(MyServiceInterface.class, false);
+          List<MyServiceInterface> myServices = BeanProvider.getContextualReferences(MyServiceInterface.class, false, false);
+  %section
+    %h2 DeltaSpike (current) Features
+    %h3 v0.2-incubating
+    %ul
+      %li Security
+      %li Exception Handling
+      %li i18n
+  %section
+    %h2 v0.2-incubating
+    %h4 Security - Securing a bean method
+    %pre
+      %code.java
+        :plain
+              @ApplicationScoped 
+          public class CustomAuthorizer {     
+            @Secures @CustomSecurityBinding     
+            public boolean doSecuredCheck(InvocationContext invocationContext, 
+                                          BeanManager manager, @LoggedIn User user) throws Exception {         
+              return user.isLoggedIn(); 
+              // perform security check     
+            } 
+          }
+
+          @ApplicationScoped
+          public class SecuredBean1 {
+              @CustomSecurityBinding
+              public void doSomething(Thing thing) {
+                  thing.doSomething();
+              }
+          }
+  %section
+    %h2 v0.2-incubating
+    %h4 Security - Security Parameter Binding
+    %pre
+      %code.java
+        :plain 
+              @ApplicationScoped
+          public class CustomAuthorizer {
+              @Secures @CustomSecurityBinding
+              public boolean doSecuredCheck(InvocationContext invocationContext, 
+                                            BeanManager manager, @LoggedIn User user, 
+                                            @CurrentThing Thing thing) throws Exception {
+                  return thing.hasMember(user); // perform security check against our method parameter
+              }
+          }
+
+          @ApplicationScoped
+          public class SecuredBean1 {
+              @CustomSecurityBinding
+              public void doSomething(@CurrentThing Thing thing) {
+                  thing.doSomething();
+              }
+          }
+  %section
+    %h2 v0.2-incubating
+    %h4 Exception Handling
+    %pre
+      %code.java
+        :plain 
+              @ExceptionHandler
+          public class MyHandlers {
+             void printExceptions(@Handles ExceptionEvent<PersistenceException> evt) {
+                System.out.println("Something bad happened: " + evt.getException().getMessage());
+                evt.handleAndContinue();
+             }
+          }
+
+          public class InventoryActions {
+            @PersistenceContext private EntityManager em;
+            @Inject private Event<ExceptionToCatchEvent> catchEvent;
+            
+            public Integer queryForItem(Item item) {
+              try {
+                Query q = em.createQuery("SELECT i from Item i where i.id = :id");
+                q.setParameter("id", item.getId());
+                return q.getSingleResult();
+              } catch (PersistenceException e) {
+                catchEvent.fire(new ExceptionToCatchEvent(e));
+              }
+            }
+          }
+  %section
+    %h2 v0.2-incubating
+    %h4 i18n
+    %pre
+      %code.java
+        :plain 
+              @MessageBundle
+          public interface SimpleMessage {
+              @MessageTemplate("Welcome to DeltaSpike") String welcomeToDeltaSpike();
+          }
+
+          @MessageBundle
+          @MessageContextConfig(messageInterpolator = CustomMessageInterpolator.class)
+          public interface SimpleMessage {
+              // in the message bundle: welcome_to=Welcome to %s
+
+              @MessageTemplate("{welcome_to}") String welcomeTo(String name);
+          }
+
+          //...
+          public class MyBean {
+              @Inject private SimpleMessage messages;
+
+              public String welcomeToDeltaSpike {
+                  return this.messages.welcomeTo("DeltaSpike");
+              }
+          }
+  %section
+    %h2 v0.3-incubating (in development)
+    %ul
+      %li JPA
+      %li Transaction Support
+      
 = partial 'can_i_get_support.html.haml'
 
 %section
