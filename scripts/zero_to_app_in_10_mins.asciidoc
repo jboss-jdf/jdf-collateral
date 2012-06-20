@@ -1,0 +1,166 @@
+Zero to HTML5 app running in the cloud in 10 mins
+=================================================
+
+Prerequisites
+-------------
+
+* OpenShift set up - account created, domain set up, ssh keys registered. See link:http://openshift.com for more.
+* JBDS 5 setup
+* JBoss server available in JBDS
+* `openshift-express` plugin installed in Forge
+* `arquillian` plugin installed in Forge
+* `as7` plugin installed in forge
+* Forge launched in JBDS *Cmd + 4*
+* `set ACCEPT_DEFAULTS true` in Forge to make it a bit less verbose
+* Switch to JBoss perspective
+* Add the event you are attending + presenters names to `import.sql`
+
+Create an app
+-------------
+
+This section of the script creates a new app from scratch from Forge, imports it into JBDS, and adds the key Java EE 6 technologies. It adds some pre-canned entities, and scaffolds JAX-RS endpoints.
+
+1. In the forge console, create a new Project
+
+    new-project --named acme --topLevelPackage com.acme
+
+2. Now, we'll add some capabilities - Servlet, CDI, JPA, Bean Validation, JAX-RS
+
+    servlet setup; beans setup; persistence setup --provider HIBERNATE --container JBOSS_AS7; validation setup --provider HIBERNATE_VALIDATOR; rest setup
+
+3. Now, let's add two entities - Event and Member. They are in `rad`. Basic JPA entities, with a few fields, getters and setters, hashCode and equals...
+
+4. Now, copy in `rad/import.sql` to `src/main/resources`. Some sample data for our app.
+
+4. Now, we want to add some Bean Validation constraints. You should end up with field definitions like these.
+
+   In `Member`:
++
+[source,java]
+---------------------------------------------------------------------------               
+   @NotNull
+   @Size(min = 1, max = 25)
+   @Pattern(regexp = "[A-Za-z ]*", message = "must contain only letters and spaces")
+   private String name;
+
+   @NotNull
+   @NotEmpty
+   @Email
+   private String email;
+
+   @NotNull
+   @Size(min = 10, max = 12)
+   @Digits(fraction = 0, integer = 12)
+   @Column(name = "phone_number")
+   private String phoneNumber;
+--------------------------------------------------------------------------
++
+   In `Event`:
+[source,java]
+---------------------------------------------------------------------------    
+   @Id
+   @GeneratedValue
+   @Column(updatable = false, nullable = false)
+   private Long id = null;
+
+    
+   @Size(message = "Must be > 20 and < 1000", min = 20, max = 1000)
+   private String description;
+   
+   @NotNull
+   @Size(message = "Must be > 5 and < 50", min = 5, max = 50)
+   private String name;
+
+   private String picture;
+---------------------------------------------------------------------------    
+
+5. Scaffold endpoints for the entity.
+
+    rest endpoint-from-entity com.acme.model.*
+
+6. Start the JBoss server in Eclipse 
+
+7. Drag and drop app to the JBoss server in Eclipse
+
+8. Open up JAX-RS REST Web Services, and locate `GET /rest/member`. Right click on it, and choose *Run As -> Run On Server*. In the Web Service Tester, click the *Play* button, and show the result.
+
+9. Change the URL to `http://localhost:8080/acme/rest/member/2` and show the result
+
+Deploy to OpenShift 
+-------------------
+
+This section takes the app you created and pushes it to the cloud. Now the app is publically available!
+
+1. Make sure you are in the root of the Forge app
+
+   ???
+
+1. First, we need to set up an OpenShift app. Forge makes this easy, just run, and accept the default values at the prompt. Make sure to enter your OpenShift username if this is the first time using OpenShift on this computer.
+
+    rhc setup
+
+2. Add the files to deploy to openshift and push them
+
+    git add src pom.xml; rhc deploy
+
+3. Check it's working. Visit `https://<appname>-pmuir.rhcloud.com/rest/member` to check it's working
+
+
+OPTIONAL - Testing
+------------------
+
+Now let's add some testing to our app. We really do want to make our test as close to our production environment as possible, so we're going to test on OpenShift. Luckily Arquillian comes with OpenShift support. 
+
+1. First, Add Arquillian to your app.
+
+    arquillian setup --container JBOSS_AS_REMOTE_7.X
+
+4. Now, we better actually add a test! Copy `rad/MemberTest.java` to `src/test/java/com/acme`
++
+./src/test/java/com/acme/test/MemberTest.java
+[source,java]
+------------------------------------------------------------------------
+@RunWith(Arquillian.class)
+public class MemberTest {
+
+    @Deployment
+    public static WebArchive deployment() {
+	return ShrinkWrap
+	        .create(WebArchive.class)
+	        .addClasses(Member.class, MemberEndpoint.class)
+	        .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+	        .addAsResource("META-INF/persistence.xml",
+	                "META-INF/persistence.xml");
+    }
+
+    @Inject
+    MemberEndpoint endpoint;
+
+    @Test
+    public void testMember() {
+	Member member = new Member();
+	member.setName("Bob");
+	member.setPhoneNumber("07769557110");
+	member.setEmail("bob@redhat.com");
+
+	endpoint.create(member);
+
+	List<Member> members = endpoint.listAll();
+	Assert.assertTrue(checkBobInList(members));
+    }
+
+    private boolean checkBobInList(List<Member> members) {
+	for (Member m : members) {
+	    if (m.getEmail().equals("bob@redhat.com"))
+		return true;
+	}
+	return false;
+    }
+
+}
+--------------------------------------------------------------------------
+
+5. Add the Arquillian Maven profile to the Eclipse project. Right click on the project and choose *Maven -> Select Maven Profiles...*. Tick `JBOSS_AS_REMOTE_7.X`.
+
+6. Run the test. Right click on `MemberTest.java` and choose *Run As -> JUnit Test*. Show test passing in JUnit panel, and deployment to JBoss AS.
+
