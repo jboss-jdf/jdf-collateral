@@ -168,8 +168,8 @@ description: "You've heard about the JBoss Way, and you like what you see. The J
               MyBean bean = BeanProvider.getContextualReference("myBean", false, MyBean.class);
           MyBean bean = BeanProvider.getContextualReference(MyBean.class, false, new QualifierLiteral());
           Object bean = BeanProvider.getContextualReference("myBean", false);
-          List<MyServiceInterface> myServices = BeanProvider.getContextualReferences(MyServiceInterface.class, false);
-          List<MyServiceInterface> myServices = BeanProvider.getContextualReferences(MyServiceInterface.class, false, false);
+          List&lt;MyServiceInterface> myServices = BeanProvider.getContextualReferences(MyServiceInterface.class, false);
+          List&lt;MyServiceInterface> myServices = BeanProvider.getContextualReferences(MyServiceInterface.class, false, false);
   %section
     %h2 DeltaSpike (current) Features
     %h3 v0.2-incubating
@@ -231,7 +231,7 @@ description: "You've heard about the JBoss Way, and you like what you see. The J
         :plain 
               @ExceptionHandler
           public class MyHandlers {
-             void printExceptions(@Handles ExceptionEvent<PersistenceException> evt) {
+             void printExceptions(@Handles ExceptionEvent&lt;PersistenceException> evt) {
                 System.out.println("Something bad happened: " + evt.getException().getMessage());
                 evt.handleAndContinue();
              }
