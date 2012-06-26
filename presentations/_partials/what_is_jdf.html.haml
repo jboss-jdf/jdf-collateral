@@ -239,7 +239,7 @@ description: "You've heard about the JBoss Way, and you like what you see. The J
 
           public class InventoryActions {
             @PersistenceContext private EntityManager em;
-            @Inject private Event<ExceptionToCatchEvent> catchEvent;
+            @Inject private Event&lt;ExceptionToCatchEvent&gt; catchEvent;
             
             public Integer queryForItem(Item item) {
               try {
