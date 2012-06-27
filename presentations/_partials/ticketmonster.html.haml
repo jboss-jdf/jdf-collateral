@@ -18,7 +18,7 @@ description: Building Modern Application the JBoss Way, using JBoss Developer Fr
   :markdown
     ## Agenda 
     
-    * Technology overview
+    * What is JBoss Developer Framework?
     * Application overview & demo
     * Application walk through
       * Persistence layer
@@ -26,34 +26,45 @@ description: Building Modern Application the JBoss Way, using JBoss Developer Fr
       * JAX-RS services
       * HTML5 & JS
     * RAD - generating the CRUD
+
+%section
+  %h2 What is jdf?
+  %blockquote
+    :markdown
+      JBoss Developer Framework shows you how to write applications using JBoss technologies
+  :markdown
+    * Learn how to write an application suitable for mobile 
+    * Learn how to use the Java EE 6 API with JBoss AS
+    * Learn how to add the power of CDI to your browser
+
+%section
+  :markdown
+    ## Highlights
+
+    * 54 Quickstarts, focused on a single use case or API
+    * Medium complexity example - TicketMonster
+    * Stacks defined for Java EE, Errai, Hibernate, Arquillian, Transactions (more to come)
+    * Migration guides for Spring, Seam 2 and Java EE 5
+
 	
+%section
+  = partial 'what_is_ticketmonster.html.haml'
+
 %section
   :markdown
     ## Modern is ...
 	
-    * Mobile-ready
-    * Rapid development
-    * Rich-client
-    * Event-driven
-  
-%section
-  = partial 'ticketmonster_architecture.html.haml'
-
-%section
-  :markdown
-    ## Tools
-  
-    * JBDS 5
-    * Forge
+    * Rich, thick(er) client
+    * Mobile and tablet ready
+    * Productive development
+    * Push out application data changes
 
 %section
   %section
     %h2 Demo
     %img(src="#{site.base_url}/images/ticketmonster_screenshot.png" width="800")
 
-  = partial 'what_is_ticketmonster.html.haml'
-
-  = partial 'html5_architecture.html.haml'
+  = partial 'ticketmonster_architecture.html.haml'  
 
 %section
   %h2 Demo deep dive
