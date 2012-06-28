@@ -164,3 +164,7 @@ public class MemberTest {
 
 6. Run the test. Right click on `MemberTest.java` and choose *Run As -> JUnit Test*. Show test passing in JUnit panel, and deployment to JBoss AS.
 
+7. Let's add the view! In Eclipse, right click on `src/main/webapp` and choose *New -> HTML file*, name it `index.html`, choose *Next* and choose the `HTML5 jQuery mobile page` template from the list.
+
+8. Let's finish the view by adding the rest of the code! Copy `rad/index.html` to `src/main/webapp`
+
