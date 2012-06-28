@@ -11,10 +11,13 @@ Prerequisites
 * `arquillian` plugin installed in Forge
 * `as7` plugin installed in forge
 * Forge launched in JBDS *Cmd + 4*
-* `set ACCEPT_DEFAULTS true` in Forge to make it a bit less verbose
 * Switch to JBoss perspective
 * Add the event you are attending + presenters names to `import.sql`
 * Make sure you have the app created on OpenShift
+
+Once forge is started
+---------------------
+* `set ACCEPT_DEFAULTS true` in Forge to make it a bit less verbose
 
 Create an app
 -------------
@@ -84,22 +87,6 @@ This section of the script creates a new app from scratch from Forge, imports it
 
 10. Change the URL to `http://localhost:8080/acme/rest/member/2` and show the result
 
-Deploy to OpenShift 
--------------------
-
-This section takes the app you created and pushes it to the cloud. Now the app is publically available!
-
-1. Import the application in the OpenShift Explorer, by right 
-2. First, we need to set up an OpenShift app. Forge makes this easy, just run, and accept the default values at the prompt. Make sure to enter your OpenShift username if this is the first time using OpenShift on this computer.
-
-    rhc setup
-
-3. Add the files to deploy to openshift and push them
-
-    git add src pom.xml; rhc deploy
-
-4. Check it's working. Visit `https://<appname>-pmuir.rhcloud.com/rest/member` to check it's working
-
 Add HTML5 Mobile view
 ---------------------
 
@@ -110,6 +97,16 @@ Add HTML5 Mobile view
 3. Open up https://<appname>-pmuir.rhcloud.com/ in the mobile browser sim and add a member, show list of members
 
 4. Note that we generated the HTML5 JQuery Mobile view using Eclipse originally - very quick way to get started
+
+Deploy to OpenShift 
+-------------------
+
+This section takes the app you created and pushes it to the cloud. Now the app is publically available!
+
+1. Import the application in the OpenShift Explorer, by right clicking on the application
+2. Work through the wizard, pointing at the existing local project
+3. Do a publish on the server adaptor, it will push it
+4. Check it's working. Visit `https://<appname>-<domain>.rhcloud.com/` to check it's working
 
 
 OPTIONAL - Testing
