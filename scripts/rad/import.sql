@@ -8,7 +8,7 @@ insert into Member (id, name, email, phone_number) values (2, 'Marius', 'mariusb
 insert into Event (id, name, description, picture) values (1, 'JBoss World & Red Hat Summit', 'The best conference to learn about JBoss, ever!', 'http://www.redhat.com/summit/img/logo-banner-small_new3.png')
 
 -- Add Pete to JBoss World
-insert into Event_Member (events_id, attendees_id) values (1, 1)
+insert into Event_Member (event_id, attendees_id) values (1, 1)
 
 -- Add Marius to JBoss World
-insert into Event_Member (events_id, attendees_id) values (1, 2)
+insert into Event_Member (event_id, attendees_id) values (1, 2)
