@@ -7,7 +7,7 @@ Prerequisites
 * OpenShift set up - account created, domain set up, ssh keys registered. See link:http://openshift.com for more.
 * JBDS 5 setup
 * JBoss server available in JBDS
-* `openshift-express` plugin installed in Forge
+* `openshift` plugin installed in Forge
 * `arquillian` plugin installed in Forge
 * `as7` plugin installed in forge
 * Forge launched in JBDS *Cmd + 4*
