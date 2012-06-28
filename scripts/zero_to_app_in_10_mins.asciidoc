@@ -14,6 +14,7 @@ Prerequisites
 * `set ACCEPT_DEFAULTS true` in Forge to make it a bit less verbose
 * Switch to JBoss perspective
 * Add the event you are attending + presenters names to `import.sql`
+* Make sure you have the app created on OpenShift
 
 Create an app
 -------------
@@ -32,19 +33,13 @@ This section of the script creates a new app from scratch from Forge, imports it
 
 4. Now, copy in `rad/import.sql` to `src/main/resources`. Some sample data for our app.
 
-4. Now, we want to add some Bean Validation constraints. You should end up with field definitions like these.
+5. Now, we want to add some Bean Validation constraints. You should end up with field definitions like these.
 
 
    In `Event`:
 +
 [source,java]
 ---------------------------------------------------------------------------    
-   @Id
-   @GeneratedValue
-   @Column(updatable = false, nullable = false)
-   private Long id = null;
-
-    
    @Size(message = "Must be > 20 and < 1000", min = 20, max = 1000)
    private String description;
    
@@ -77,36 +72,44 @@ This section of the script creates a new app from scratch from Forge, imports it
 --------------------------------------------------------------------------
 +    
 
-5. Scaffold endpoints for the entity.
+6. Scaffold endpoints for the entity.
 
-    rest endpoint-from-entity com.acme.model.*
+    rest endpoint-from-entity --contentType application/json com.acme.model.*
+    
+7. Start the JBoss server in Eclipse 
 
-6. Start the JBoss server in Eclipse 
+8. Drag and drop app to the JBoss server in Eclipse
 
-7. Drag and drop app to the JBoss server in Eclipse
+9. Open up JAX-RS REST Web Services, and locate `GET /rest/member`. Right click on it, and choose *Run As -> Run On Server*. In the Web Service Tester, click the *Play* button, and show the result.
 
-8. Open up JAX-RS REST Web Services, and locate `GET /rest/member`. Right click on it, and choose *Run As -> Run On Server*. In the Web Service Tester, click the *Play* button, and show the result.
-
-9. Change the URL to `http://localhost:8080/acme/rest/member/2` and show the result
+10. Change the URL to `http://localhost:8080/acme/rest/member/2` and show the result
 
 Deploy to OpenShift 
 -------------------
 
 This section takes the app you created and pushes it to the cloud. Now the app is publically available!
 
-1. Make sure you are in the root of the Forge app
-
-   ???
-
-1. First, we need to set up an OpenShift app. Forge makes this easy, just run, and accept the default values at the prompt. Make sure to enter your OpenShift username if this is the first time using OpenShift on this computer.
+1. Import the application in the OpenShift Explorer, by right 
+2. First, we need to set up an OpenShift app. Forge makes this easy, just run, and accept the default values at the prompt. Make sure to enter your OpenShift username if this is the first time using OpenShift on this computer.
 
     rhc setup
 
-2. Add the files to deploy to openshift and push them
+3. Add the files to deploy to openshift and push them
 
     git add src pom.xml; rhc deploy
 
-3. Check it's working. Visit `https://<appname>-pmuir.rhcloud.com/rest/member` to check it's working
+4. Check it's working. Visit `https://<appname>-pmuir.rhcloud.com/rest/member` to check it's working
+
+Add HTML5 Mobile view
+---------------------
+
+1. Let's add the view! In Eclipse, right click on `src/main/webapp` and choose *New -> HTML file*, name it `index.html`, choose *Next* and choose the `HTML5 jQuery mobile page` template from the list.
+
+2. Let's finish the view by adding the rest of the code! Copy `rad/index.html` to `src/main/webapp`
+
+3. Open up https://<appname>-pmuir.rhcloud.com/ in the mobile browser sim and add a member, show list of members
+
+4. Note that we generated the HTML5 JQuery Mobile view using Eclipse originally - very quick way to get started
 
 
 OPTIONAL - Testing
@@ -118,7 +121,7 @@ Now let's add some testing to our app. We really do want to make our test as clo
 
     arquillian setup --container JBOSS_AS_REMOTE_7.X
 
-4. Now, we better actually add a test! Copy `rad/MemberTest.java` to `src/test/java/com/acme`
+2. Now, we better actually add a test! Copy `rad/MemberTest.java` to `src/test/java/com/acme`
 +
 ./src/test/java/com/acme/test/MemberTest.java
 [source,java]
@@ -163,11 +166,7 @@ public class MemberTest {
 }
 --------------------------------------------------------------------------
 
-5. Add the Arquillian Maven profile to the Eclipse project. Right click on the project and choose *Maven -> Select Maven Profiles...*. Tick `JBOSS_AS_REMOTE_7.X`.
+3. Add the Arquillian Maven profile to the Eclipse project. Right click on the project and choose *Maven -> Select Maven Profiles...*. Tick `JBOSS_AS_REMOTE_7.X`.
 
-6. Run the test. Right click on `MemberTest.java` and choose *Run As -> JUnit Test*. Show test passing in JUnit panel, and deployment to JBoss AS.
-
-7. Let's add the view! In Eclipse, right click on `src/main/webapp` and choose *New -> HTML file*, name it `index.html`, choose *Next* and choose the `HTML5 jQuery mobile page` template from the list.
-
-8. Let's finish the view by adding the rest of the code! Copy `rad/index.html` to `src/main/webapp`
+4. Run the test. Right click on `MemberTest.java` and choose *Run As -> JUnit Test*. Show test passing in JUnit panel, and deployment to JBoss AS.
 
