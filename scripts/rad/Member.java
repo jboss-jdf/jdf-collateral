@@ -49,9 +49,6 @@ public class Member implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToMany(mappedBy = "attendees")
-    private Collection<Event> events = new ArrayList<Event>();
-
     public Long getId() {
 	return id;
     }
@@ -82,14 +79,6 @@ public class Member implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
 	this.phoneNumber = phoneNumber;
-    }
-
-    public Collection<Event> getEvents() {
-	return events;
-    }
-
-    public void setEvents(Collection<Event> events) {
-	this.events = events;
     }
 
     @Override
