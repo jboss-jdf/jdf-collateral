@@ -7,3 +7,6 @@ _tmp
 .sass-cache
 .awestruct
 *.swp
+target
+.project
+*.DS_Store
