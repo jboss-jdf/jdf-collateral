@@ -254,6 +254,7 @@ Here we use an easily installed Jenkins to do builds. It takes up one slot of ou
 7. Now, make the test fail and show this in action - add an `Assert.fail()` to the end of `testMember()` and push the change
 
     git add pom.xml src; rhc-express deploy
+
 8. The build will fail, so we better remove that!
 
 
