@@ -227,7 +227,7 @@ public class MemberTest {
     }
 
 }
---------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 5. Now, run the test in Forge. Notice how we use the `arquillian-openshift-express` profile.
 
