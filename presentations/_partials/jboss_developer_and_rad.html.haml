@@ -1,0 +1,128 @@
+---
+---
+
+= partial('title.html.haml', {'title'=>page.parent.title, 'subtitle'=>page.parent.subtitle, 'authors'=>page.parent.authors, 'splash'=>page.parent.splash, 'presentation_date'=>page.parent.presentation_date})
+
+%section
+  %h2 Session Objective
+  %blockquote
+    :markdown
+      By the end of this session you will understand the resources that the JBoss offers you.
+
+      You will have seen how productive you can be with the JBoss stack.
+
+%section
+  :markdown
+    ## Agenda 
+    
+    * What is the JBoss Way
+      * Quickstarts & JBoss BOMs
+      * Migration
+      * Overview of TicketMonster
+    * RAD - how to get started, quickly
+    * Roadmap
+      * What's coming? 
+      * How does DeltaSpike fit in?
+
+%section
+  %h2 What is the JBoss Way?
+  %blockquote
+    :markdown
+      The JBoss Way shows you how to write applications using JBoss technologies.
+
+      * Learn how to write an application suitable for mobile 
+      * Learn how to use the Java EE 6 API with JBoss AS
+      * Learn how to add the power of CDI to your browser
+
+%section
+  :markdown
+    ## Highlights
+
+    * 81 Quickstarts, focused on a single use case or API
+    * Medium complexity example - TicketMonster, with Apache Cordova, and JBoss Data Grid
+    * Stacks defined for Java EE, Errai, Hibernate, Arquillian, Transactions, DeltaSpike, RichFaces, Infinispan (more to come)
+    * Migration guides for Spring, Seam 2 and Java EE 5
+    * Archetypes - Java EE, RichFaces, Errai, HTML5
+
+%section
+  %h2 Quickstarts & JBoss Stacks
+  %img(src="#{site.base_url}/images/quickstarts_screenshot.png" width="800")
+
+%section
+  %section
+    %h2 TicketMonster
+    %img(src="#{site.base_url}/images/ticketmonster_screenshot.png" width="800")
+  
+%section
+  %section
+    %h2 RAD - how to get started, quickly    
+    %h3{:style=>"margin-top: 200px;"} Wat's this about?
+  %section
+    %div{:style=>"margin-top: 200px;"} Getting started sucks
+  %section
+    %div{:style=>"margin-top: 200px;"} Integrating stuff is hard
+  %section
+    %div{:style=>"margin-top: 200px;"} Remembering stuff is hard
+  %section
+    %div{:style=>"margin-top: 200px;"} Repetitive tasks are:
+  %section
+    %div{:style=>"margin-top: 200px;"} Annoying
+  %section
+    %div{:style=>"margin-top: 200px;"} Frustrating
+  %section
+    %div{:style=>"margin-top: 200px;"} Make you crazy
+  %section
+    %div{:style=>"margin-top: 200px;"} Ok, maybe we are already a little crazy
+  %section
+    %h2 So what do we do about it?
+  %section{:"data-state" => "whiteout" }
+    %img{:src=>"#{site.base_url}/images/googling.png"}
+  %section{:"data-state"=>"alert"}
+    %h1.capitalize No!
+
+%section
+  %section{:"data-state" => "whiteout" }
+    %img{:src => "#{site.base_url}/images/JBoss_Forge_logo.png"}
+    %img.fragment{:src => "#{site.base_url}/images/JBoss_Community_logo.png", :style => "float:right; margin-left:300px; margin-top: 150px;", :width=>"250px"}
+  %section
+    %h2 Our tasks for the day
+    %ol
+      %li.fragment Get started
+      %li.fragment Get integrated
+      %li.fragment Get mental
+      %li.fragment Get efficient
+
+%section
+  %h2 Roadmap
+  .pull-left
+    :markdown
+      #### 2.1
+
+      January 2013
+
+      * DeltaSpike
+      * Security
+      * Data Grids 
+  .pull-left{:style=>"margin-left:2em;"}
+    :markdown
+      #### 2.?
+
+      To come:
+
+      * jbpm & Drools
+      * SwitchYard
+      * Fuse
+      * PicketLink
+
+= partial 'can_i_get_support.html.haml'
+
+%section
+  %h2 Q&A
+  %ul
+    %li
+      %a(href="http://jboss.org/developer") http://jboss.org/developer
+    %li
+      %a(href="http://jboss.org/jdf") http://jboss.org/jdf
+    %li
+      %a(href="https://twitter.com/#!/jbossdeveloper") @jbossdeveloper
+
