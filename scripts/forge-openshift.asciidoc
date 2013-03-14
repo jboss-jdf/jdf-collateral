@@ -4,9 +4,9 @@ Show Forge to create a Java EE app on OpenShift
 Prerequisites
 -------------
 
-* Forge 1.0.2.Final installed. See link:http://jboss.org/forge for more.
+* Forge 1.2.1.Final installed. See link:http://jboss.org/forge for more.
 * OpenShift set up - account created, domain set up, ssh keys registered. See link:http://openshift.com for more.
-* JBDS or Eclipse + JBoss Tools setup
+* JBDS setup and Forge running in it
 * `openshift-express` plugin installed in Forge
 
  
@@ -23,25 +23,20 @@ Create an app
 This section of the script creates a new app from scratch from Forge, imports it into JBDS, and adds the key Java EE 6 technologies. It creates an entity, and scaffolds both a JSF CRUD view and a JAX-RS endpoint.
 
 1. Download and Unzip the Forge distribution into a folder of your choice
-2. Run 
-
-    bin/forge (unix) 
-    bin/forge.bat (windows)
-
+2. Add the forge runtime to JBDS via _Preferences_
 3. Create a new Project
 
     new-project --named acme --topLevelPackage com.acme
 
-4. Import into Eclipse using m2e
-5. Now, we'll add what we want to the projec using Forge. First, add CDI
+4. Now, we'll add what we want to the projec using Forge. First, add CDI
     
     beans setup
 
-6. Add JPA, and when promted select `n` to no as we don't want the extended APIs
+5. Add JPA, and when promted select `n` to no as we don't want the extended APIs
     
-    persistence setup --provider HIBERNATE --container JBOSS_AS7
+    persistence setup --provider HIBERNATE --container JBOSS_EAP6
 
-7. Add Bean Validation 
+6. Add Bean Validation 
 
     validation setup --provider HIBERNATE_VALIDATOR
 
@@ -70,30 +65,27 @@ This section of the script creates a new app from scratch from Forge, imports it
 --------------------------------------------------------------------------
 
 11. Now, generate getters and setters for all fields using Eclipse
-12. Now let's scaffold a JSF CRUD view for the entity. First, add scaffolding to the project in Forge.
 
-    scaffold setup
 
-13. Now, scaffold the view for the entity
-
-    scaffold from-entity com.acme.model.Member.java
-
-14. We also want to scaffold JAX-RS endpoints, so setup JAX-RS
+12. We also want to scaffold JAX-RS endpoints, so setup JAX-RS
 
     rest setup
 
-15. And scaffold an endpoint from it
+13. And scaffold an endpoint from it
 
-    rest endpoint-from-entity com.acme.model.Member.java
+    rest endpoint-from-entity com.acme.model.Member.java  --contentType application/json 
 
-16. Start the JBoss server 
+14. Now let's scaffold a JSF CRUD view for the entity. First, add scaffolding to the project in Forge.
 
-    $JBOSS_HOME/bin/standalone.sh (unix)
-    $JBOSS_HOME/bin/standalone.bat
+    scaffold setup --scaffoldType html5
 
-17. Build and deploy it 
+15. Now, scaffold the view for the entity
 
-    mvn clean package jboss-as:deploy
+    scaffold from-entity com.acme.model.Member.java --scaffoldType html5
+
+16. Start the JBoss server in Eclipse
+
+17. Deploy it using drag and drop onto the server
 
 
 Deploy to OpenShift 
@@ -101,15 +93,10 @@ Deploy to OpenShift
 
 This section takes the app you created and pushes it to the cloud. Now the app is publically available!
 
-1. First, we need to set up an OpenShift app. Forge makes this easy, just run, and accept the default values at the prompt. Make sure to enter your OpenShift username if this is the first time using OpenShift on this computer.
-
-    rhc-express setup
-
-2. Add the files to deploy to openshift and push them
-
-    git add src pom.xml; rhc-express deploy
-
-3. Paste url provided by `rhc-express setup` into web browser
+1. Import the application in the OpenShift Explorer, by right clicking on the application
+2. Work through the wizard, pointing at the existing local project
+3. Do a publish on the server adaptor, it will push it
+4. Check it's working. Visit `https://<appname>-<domain>.rhcloud.com/` to check it's working
 
 
 Add MySQL to app
@@ -122,10 +109,7 @@ This section switches the in memory H2 datasource for a MySQL database. Once com
 3. Log into phpMyAdmin using details provided. Nothing to see yet, we need to deploy the app!
 4. OpenShift automatically configures a managed datasource for this database, so we don't need to do anything here. 
 5. Now, we need to tell the app to use the MySQL datasource. In JBDS open up `src/main/resources/persistence.xml` and set the DS to `java:jboss/datasources/MysqlDS` and change the `hibernate.hbm2ddl.auto` property to `update`, so that we don't clobber the data every time!
-6. Now deploy the changes
-
-    git add src; rhc-express deploy
-
+6. Now publish the changes from the server adaptor
 7. Visit the app, and add an entry
 8. In phpMyAdmin click to refresh, and then in the Member table to show the added entry
 
@@ -137,26 +121,10 @@ Now let's add some testing to our app. We really do want to make our test as clo
 
 1. First, Add Arquillian to your app. It doesn't really matter what container you select, at the moment Forge doesn't support the OpenShift container, we need to add it manually.
 
-    arquillian setup
+    arquillian setup --containerType REMOTE --containerName OPENSHIFT
 
-2. Add the `arquillian-openshift-express` profile to `pom.xml` (this is the manual adding of the container)
-+
-[source,xml]
------------------------------------------------------------------
-<profile>
-    <id>arquillian-openshift-express</id>
-    <dependencies>
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-openshift-express</artifactId>
-            <version>1.0.0.Beta1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-</profile>
------------------------------------------------------------------
 
-3. We also need to add an `arquillian.xml` with the configuration of the OpenShift account. 
+2. We also need to add an `arquillian.xml` with the configuration of the OpenShift account. 
 +
 *************************************************************************************
 Note that you need to replace Pete's details with your own here. You also need to set
@@ -184,7 +152,7 @@ the demo!
 </arquillian>
 ------------------------------------------------------------------------------------
 
-4. Now, we better actually add a test! We'll be exercising the JAX-RS endpoint we created.
+3. Now, we better actually add a test! We'll be exercising the JAX-RS endpoint we created.
 +
 ./src/test/java/com/acme/test/MemberTest.java
 [source,java]
@@ -231,7 +199,7 @@ public class MemberTest {
 
 5. Now, run the test in Forge. Notice how we use the `arquillian-openshift-express` profile.
 
-    mvn clean test -Parquillian-openshift-express
+    mvn clean test -POPENSHIFT
 
 
 Use Jenkins with OpenShift to manage builds
@@ -262,4 +230,47 @@ Add Scaling to the app
 ----------------------
 
 TODO
+
+
+Option: Add a relationship
+--------------------------
+
+0. set ACCEPT_DEFAULTS true
+
+1. Now, let's add a relationship to `Member` - for example, the awards they've won. First, add the `Awards` lookup table:
+
+     entity --named Award --package com.acme.model
+     field string --named name
+
+2. Now, let's add a relationship from `Member` to `Award`, a member can have a number of awards:
+
+    cd ../Member.java
+    field manyToMany --named awards --fieldType com.acme.model.Award.java
+
+3. Go into file and change `fetch` to `EAGER` (bug?)
+
+4. Now, regenerate the REST endpoints, and the UI:
+
+    rest endpoint-from-entity com.acme.model.*  --contentType application/json 
+    scaffold from-entity com.acme.model.*  --scaffoldType html5
+
+
+5. Let's add the `Organization` entity using Forge. This adds the class, the `@Entity` annotation, an id field, and a version field.
+
+    entity --named Organization --package com.acme.model
+    field string --named name
+
+6. An organisation has a list of members. Let's assume that a member can only belong to one organisation:
+
+    field oneToMany --named members --fieldType com.acme.model.Member.java
+
+7. Go into file and change `fetch` to `EAGER` (bug?)
+
+8. Now, regenerate the REST endpoints, and the UI:
+
+    rest endpoint-from-entity com.acme.model.*  --contentType application/json 
+    scaffold from-entity com.acme.model.*  --scaffoldType html5
+
+9. Now, we want to display the name, not the id - edit `views/Member/detail.html`, and alter the ng-options for the select to be `a as a.name for a in awardsList`
+
 
