@@ -40,15 +40,15 @@ This section of the script creates a new app from scratch from Forge, imports it
 
     validation setup --provider HIBERNATE_VALIDATOR
 
-8. Add JSF 
+7. Add JSF 
 
     faces setup
 
-9. Now, let's add an entity using Forge. This adds the class, the `@Entity` annotation, an id field, and a version field.
+8. Now, let's add an entity using Forge. This adds the class, the `@Entity` annotation, an id field, and a version field.
 
     entity --named Member --package com.acme.model
 
-10. Add these fields with constrains via Eclipse
+9. Add these fields with constrains via Eclipse
 +
 --------------------------------------------------------------------------
     @Column
@@ -64,28 +64,28 @@ This section of the script creates a new app from scratch from Forge, imports it
     private String phoneNumber;
 --------------------------------------------------------------------------
 
-11. Now, generate getters and setters for all fields using Eclipse
+10. Now, generate getters and setters for all fields using Eclipse
 
 
-12. We also want to scaffold JAX-RS endpoints, so setup JAX-RS
+11. We also want to scaffold JAX-RS endpoints, so setup JAX-RS
 
     rest setup
 
-13. And scaffold an endpoint from it
+12. And scaffold an endpoint from it
 
     rest endpoint-from-entity com.acme.model.Member.java  --contentType application/json 
 
-14. Now let's scaffold a JSF CRUD view for the entity. First, add scaffolding to the project in Forge.
+13. Now let's scaffold a JSF CRUD view for the entity. First, add scaffolding to the project in Forge.
 
     scaffold setup --scaffoldType html5
 
-15. Now, scaffold the view for the entity
+14. Now, scaffold the view for the entity
 
     scaffold from-entity com.acme.model.Member.java --scaffoldType html5
 
-16. Start the JBoss server in Eclipse
+15. Start the JBoss server in Eclipse
 
-17. Deploy it using drag and drop onto the server
+16. Deploy it using drag and drop onto the server
 
 
 Deploy to OpenShift 
@@ -104,11 +104,21 @@ Add MySQL to app
 
 This section switches the in memory H2 datasource for a MySQL database. Once complete, you won't loose data between restarts of the app. We use OpenShift's built in MySQL support, configured via the web console.
 
-1. First, add the MySQL _embedded cartridge_ to our app. On the OpenShift console (accessed from link:https://openshift.redhat.com/app/console/applications), click on your application, and choose _Details -> Add+ -> MySQL Datbaase 5.1 Select -> Add cartridge_, and then return back to the application overview, the _Application Overview page_ on the bottom left of the page.
-2. Now, let's install phpMyAdmin so we can see what is going on. Choose _Details -> Add+ -> phpMyAdmin 3.4 -> Select -> Add cartridge_, and then return back to the application overview, the _Application Overview page_ on the bottom left of the page. You'll be provided with the login credentials for phpMyAdmin here. Copy the password.
+1. First, add the MySQL and phpMyAdmin _embedded cartridge_ to our app. Right click on application in OpenShift explorer, and choose "Edit Embedded Cartridges"
+2. Choose MySQL and phpMyAdmin. You'll be provided with the login credentials for phpMyAdmin here. Copy the password.
 3. Log into phpMyAdmin using details provided. Nothing to see yet, we need to deploy the app!
 4. OpenShift automatically configures a managed datasource for this database, so we don't need to do anything here. 
-5. Now, we need to tell the app to use the MySQL datasource. In JBDS open up `src/main/resources/persistence.xml` and set the DS to `java:jboss/datasources/MysqlDS` and change the `hibernate.hbm2ddl.auto` property to `update`, so that we don't clobber the data every time!
+5. Now, we need to tell the app to use the MySQL datasource. In JBDS copy `src/main/resources` to `src/main/resources-openshift`, open up `src/main/resources-openshift/persistence.xml` and set the DS to `java:jboss/datasources/MysqlDS` and change the `hibernate.hbm2ddl.auto` property to `update`, so that we don't clobber the data every time!
+6. Now, edit the `pom.xml` and tell Maven to use the `resources-openshift` on openshift. Add this to the `openshift` profile:
++
+[source,xml]
+------------------------------------------------------------------------------------
+   <resources>
+     <resource>
+       <directory>src/main/resources-openshift</directory>
+     </resource>
+   </resources>
+------------------------------------------------------------------------------------
 6. Now publish the changes from the server adaptor
 7. Visit the app, and add an entry
 8. In phpMyAdmin click to refresh, and then in the Member table to show the added entry
@@ -197,7 +207,7 @@ public class MemberTest {
 }
 ------------------------------------------------------------------------
 
-5. Now, run the test in Forge. Notice how we use the `arquillian-openshift-express` profile.
+4. Now, run the test in Forge. Notice how we use the `arquillian-openshift-express` profile.
 
     mvn clean test -POPENSHIFT
 
@@ -207,14 +217,8 @@ Use Jenkins with OpenShift to manage builds
 
 Here we use an easily installed Jenkins to do builds. It takes up one slot of our 5 on OpenShift. This means your build runs in a jail, and doesn't steal resources from a running app. The app will stay up, and only get replaced if the build succeeds. It also gives you a record of builds. Good for >1 person working on an app.
 
-1. First, set up Jenkins. Note that if you don't have a jenkins app installed, it will add one. 
-
-    rhc-express embed-jenkins
-
-2. Show this in action - make a change to the `index.xhtml` and then deploy the change 
-    
-    git add pom.xml src; rhc-express deploy
-
+1. First, add the jenkins client _embedded cartridge_ to our app. Right click on application in OpenShift explorer, and choose "Edit Embedded Cartridges"
+2. You'll be provided with the login credentials for jenkins here. Copy the password.
 3. Show that the node is still up whilst app is building
 4. The real value comes when we run tests - log into Jenkins console (password provided first time you you run `rhc-express embed-jenkins`, and edit the acme build configuration to remove the `-DskipTests`
 5. Edit the `pom.xml` and merge the `openshift` and `arquillian-openshift-express` profiles so our tests get run
@@ -235,42 +239,42 @@ TODO
 Option: Add a relationship
 --------------------------
 
-0. set ACCEPT_DEFAULTS true
+1. set ACCEPT_DEFAULTS true
 
-1. Now, let's add a relationship to `Member` - for example, the awards they've won. First, add the `Awards` lookup table:
+2. Now, let's add a relationship to `Member` - for example, the awards they've won. First, add the `Awards` lookup table:
 
      entity --named Award --package com.acme.model
      field string --named name
 
-2. Now, let's add a relationship from `Member` to `Award`, a member can have a number of awards:
+3. Now, let's add a relationship from `Member` to `Award`, a member can have a number of awards:
 
     cd ../Member.java
     field manyToMany --named awards --fieldType com.acme.model.Award.java
 
-3. Go into file and change `fetch` to `EAGER` (bug?)
+4. Go into file and change `fetch` to `EAGER` (bug?)
 
-4. Now, regenerate the REST endpoints, and the UI:
+5. Now, regenerate the REST endpoints, and the UI:
 
     rest endpoint-from-entity com.acme.model.*  --contentType application/json 
     scaffold from-entity com.acme.model.*  --scaffoldType html5
 
 
-5. Let's add the `Organization` entity using Forge. This adds the class, the `@Entity` annotation, an id field, and a version field.
+6. Let's add the `Organization` entity using Forge. This adds the class, the `@Entity` annotation, an id field, and a version field.
 
     entity --named Organization --package com.acme.model
     field string --named name
 
-6. An organisation has a list of members. Let's assume that a member can only belong to one organisation:
+7. An organisation has a list of members. Let's assume that a member can only belong to one organisation:
 
     field oneToMany --named members --fieldType com.acme.model.Member.java
 
-7. Go into file and change `fetch` to `EAGER` (bug?)
+8. Go into file and change `fetch` to `EAGER` (bug?)
 
-8. Now, regenerate the REST endpoints, and the UI:
+9. Now, regenerate the REST endpoints, and the UI:
 
     rest endpoint-from-entity com.acme.model.*  --contentType application/json 
     scaffold from-entity com.acme.model.*  --scaffoldType html5
 
-9. Now, we want to display the name, not the id - edit `views/Member/detail.html`, and alter the ng-options for the select to be `a as a.name for a in awardsList`
+10. Now, we want to display the name, not the id - edit `views/Member/detail.html`, and alter the ng-options for the select to be `a as a.name for a in awardsList`
 
 
