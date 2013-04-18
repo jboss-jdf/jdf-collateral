@@ -156,6 +156,7 @@ the demo!
             <property name="application">test</property>
             <property name="sshUserName">0f02de982fcc4981b41d506754f610cc</property>
             <property name="login">pmuir@bleepbleep.org.uk</property>
+            <property name="deploymentTimeoutInSeconds">90</property>
         </configuration>
     </container>
 
@@ -220,13 +221,10 @@ Here we use an easily installed Jenkins to do builds. It takes up one slot of ou
 1. First, add the jenkins client _embedded cartridge_ to our app. Right click on application in OpenShift explorer, and choose "Edit Embedded Cartridges"
 2. You'll be provided with the login credentials for jenkins here. Copy the password.
 3. Show that the node is still up whilst app is building
-4. The real value comes when we run tests - log into Jenkins console (password provided first time you you run `rhc-express embed-jenkins`, and edit the acme build configuration to remove the `-DskipTests`
-5. Edit the `pom.xml` and merge the `openshift` and `arquillian-openshift-express` profiles so our tests get run
+4. The real value comes when we run tests - log into Jenkins console (password provided when you embed the cartridge), and edit the acme build configuration to remove the `-DskipTests`
+5. Edit the `pom.xml` and merge the `openshift` and `arq-openshift` profiles so our tests get run
 6. Show this in action - click the build icon in Jenkins
 7. Now, make the test fail and show this in action - add an `Assert.fail()` to the end of `testMember()` and push the change
-
-    git add pom.xml src; rhc-express deploy
-
 8. The build will fail, so we better remove that!
 
 
