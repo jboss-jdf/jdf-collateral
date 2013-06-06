@@ -18,37 +18,60 @@ description: Building Modern Application the JBoss Way, using JBoss Developer Fr
   :markdown
     ## Agenda 
     
-    * What is JBoss Developer Framework?
-    * Application overview & demo
-    * Application walk through
-      * Persistence layer
-      * Business logic
-      * JAX-RS services
-      * HTML5 & JS
-    * RAD - generating the CRUD
+    * What is the JBoss Way
+      * Quickstarts & JBoss BOMs
+      * Migration
+      * Overview of TicketMonster
+    * RAD - how to get started, quickly
+    * Roadmap
+      * What's next? 
+      * How does DeltaSpike fit in?
 
 %section
-  %h2 What is jdf?
+  %h2 What is the JBoss Way?
   %blockquote
     :markdown
-      JBoss Developer Framework shows you how to write applications using JBoss technologies
-  :markdown
-    * Learn how to write an application suitable for mobile 
-    * Learn how to use the Java EE 6 API with JBoss AS
-    * Learn how to add the power of CDI to your browser
+      The JBoss Way shows you how to write applications using JBoss technologies.
+
+      * Learn how to write an application suitable for mobile 
+      * Learn how to use the Java EE 6 API with JBoss AS
+      * Learn how to add the power of CDI to your browser
+      * Learn how to use JBoss Data Grid to scale your application
 
 %section
   :markdown
     ## Highlights
 
-    * 54 Quickstarts, focused on a single use case or API
-    * Medium complexity example - TicketMonster
-    * Stacks defined for Java EE, Errai, Hibernate, Arquillian, Transactions (more to come)
+    * 80+ Quickstarts, focused on a single use case or API
+    * Medium complexity example - TicketMonster, with Apache Cordova and JBoss Data Grid
+    * Stacks defined for Java EE, Hibernate, Arquillian, Transactions and lots more 
     * Migration guides for Spring, Seam 2 and Java EE 5
 
-	
 %section
+  %h2 Quickstarts & JBoss Stacks
+  %img(src="#{site.base_url}/images/quickstarts_screenshot.png" width="800")
+
+%section
+  %section
+    %h2 TicketMonster
+    %img(src="#{site.base_url}/images/ticketmonster_screenshot.png" width="800")
+  
   = partial 'what_is_ticketmonster.html.haml'
+
+%section
+  %h2 Roadmap
+  .pull-left
+    :markdown
+      #### Tentatively September 2013
+
+      * Fuse (Apache Camel) 
+      * Switchyard
+
+  .pull-left{:style=>"margin-left:2em;"}
+    :markdown
+      ##### Tentatively December 2013
+
+      * jbpm & Drools
 
 %section
   :markdown

@@ -1,0 +1,83 @@
+!!!
+%html
+  %head
+    %title= (page.title ? (page.site_title ? page.site_title : page.title) : site.title)
+    %meta(name="description"){:content=>page.description ? page.description : site.description}
+    - if site.keywords
+      %meta(name="keywords"){:content=>site.keywords}
+    - if page.author
+      %meta(name="author"){:content=>page.author ? page.author : site.author}
+    - if site.noindex
+      %meta(name="robots" content="noindex")
+    - if site.url
+      %link(rel="canonical"){:href=>site.url}
+
+    %meta{ :name=>"apple-mobile-web-app-capable", :content=>"yes"}
+    %meta{ :name=>"apple-mobile-web-app-status-bar-style", :content=>"black-translucent"}
+
+    %meta{ :name=>"viewport", :content=>"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
+
+    %link{ :rel=>'stylesheet', :type=>'text/css', :href=>"#{site.base_url}/stylesheets/reveal.css", :media=>'screen, projection' }
+    %link{ :rel=>'stylesheet', :type=>'text/css', :href=>"#{site.base_url}/stylesheets/redhat.css"}
+    %link{ :rel=>'stylesheet', :type=>'text/css', :href=>"#{site.base_url}/stylesheets/theme/red.css", :id=>'theme'}
+    %link{ :rel=>'stylesheet', :type=>'text/css', :href=>"#{site.base_url}/stylesheets/theme/multi.css"}
+
+    -# For syntax highlighting
+    %link{ :rel=>'stylesheet', :href=>"#{site.base_url}/lib/css/zenburn.css"}
+
+    -# If the query includes 'print-pdf', use the PDF print sheet
+    %script
+      document.write( '<link rel="stylesheet" href="#{site.base_url}/stylesheets/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+
+    /[if lt IE 9]
+      %script{ :src=>'lib/js/html5shiv.js'}
+
+    -# TODO: ADD METRICS
+  %body
+    .redhat-box
+      .redhat-shadowman-logo
+      .redhat-hashtag
+        &#35;rhsummit
+      .redhat-hashtag
+        &#35;redhat
+    .reveal
+      .slides
+        ~ content
+
+    %script{ :src=>"#{site.base_url}/lib/js/head.min.js"}
+    %script{ :src=>"#{site.base_url}/javascripts/reveal.min.js"}
+    :javascript
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+          controls: true,
+          progress: true,
+          history: true,
+          center: true,
+
+          // The "normal" size of the presentation, aspect ratio will be preserved
+          // when the presentation is scaled to fit different resolutions. Can be
+          // specified using percentage units.
+          width: 1024,
+          height: 768,
+
+
+
+          theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+          transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+          // Optional libraries used to extend on reveal.js
+          dependencies: [
+              { src: "#{site.base_url}/lib/js/classList.js", condition: function() { return !document.body.classList; } },
+              { src: "#{site.base_url}/plugin/markdown/showdown.js", condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+              { src: "#{site.base_url}/plugin/markdown/markdown.js", condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+              { src: "#{site.base_url}/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+              { src: "#{site.base_url}/plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; } },
+              { src: "#{site.base_url}/plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; } }
+
+              // { src: "#{site.base_url}/plugin/search/search.js", async: true, condition: function() { return !!document.body.classList; } }
+              // { src: "#{site.base_url}/plugin/remotes/remotes.js", async: true, condition: function() { return !!document.body.classList; } }
+
+          ]
+      });
+

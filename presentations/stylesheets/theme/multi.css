@@ -1,0 +1,187 @@
+/*******************************************
+ * MULTI-COLORED TEMPLATES
+ ******************************************/
+
+/* Every summit section by default will have certain background settings */
+.blue-basic   .reveal,
+.blue-text    .reveal,
+.green-basic  .reveal,
+.green-text   .reveal,
+.orange-basic .reveal,
+.orange-text  .reveal,
+.grey-basic   .reveal,
+.grey-text    .reveal,
+
+{
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-size: cover;
+}
+
+
+/* Two versions of each color scheme '.xxxx-basic' has a plain background, '.xxxx-text' has the announcement in it'
+
+/** BLUE **/
+.blue-basic .reveal {
+    background-image: url("/images/blue_basic.png");
+}
+
+.blue-text .reveal {
+    background-image: url("/images/blue_globe.png");
+}
+
+
+/** GREEN **/
+.green-basic .reveal {
+    background-image: url("/images/green_basic.png");
+}
+
+.green-text .reveal {
+    background-image: url("/images/green_globe.png");
+}
+
+
+/** ORANGE **/
+.orange-basic .reveal {
+    background-image: url("/images/orange_basic.png");
+}
+
+.orange-text .reveal {
+    background-image: url("/images/orange_globe.png");
+}
+
+
+
+/** GREY **/
+.grey-basic .reveal {
+    background-image: url("/images/grey_basic.png");
+}
+
+.grey-text .reveal {
+    background-image: url("/images/grey_with_text.png");
+}
+
+
+/** PLAIN WHITE **/
+.white-basic .reveal {
+    background:none; /* Reset Background */
+    background:#ffffff; /* Make white */
+}
+
+
+
+
+/* Other CSS Rules for color templates */
+section[data-state=blue-basic],
+section[data-state=blue-basic],
+section[data-state=blue-text],
+section[data-state=green-basic],
+section[data-state=green-text],
+section[data-state=orange-basic],
+section[data-state=orange-text],
+section[data-state=grey-basic],
+section[data-state=grey-text]
+{
+    margin-top:1.8em;
+}
+
+
+/*******************************************
+ * REDHAT LOGO AND HASHTAGS BOX
+ ******************************************/
+.redhat-box {
+  position:fixed;
+  left:1em;
+  bottom:1em;
+  z-index:1000;
+  font-family: "Overpass", sans-serif;
+  vertical-align: middle;
+  /* Default Height (= screen width greater than 980px)*/
+  height:90px;
+  width:auto; /* Left open in case a hashtag is added/removed */
+  font-size:16px;
+}
+
+.redhat-shadowman-logo {
+    display:block;
+    background:url("/images/redhat_404_137.png") no-repeat;
+    background-size:contain;
+    float:left;
+    width:290px;
+    height:100%; 
+}
+
+.redhat-hashtag {
+    float:left;
+    display:block;
+    margin-right:.5em;
+}
+
+.redhat-hashtag:last-child {
+    margin-right:0;
+}
+
+/* Media Screen Size Changes For Red Hat hashtag box */
+@media (min-width:980px) {
+    .redhat-hashtag {    
+        font-size:1.8em;
+        margin-top:1.5em;
+    }
+}
+
+@media (min-width:681px) and (max-width:979px) {
+    .redhat-box {   
+        height:60px;
+        bottom:2.1em;
+    }
+    
+    .redhat-shadowman-logo {
+        width:190px;
+        height:100%; 
+}
+
+    .redhat-hashtag {    
+        font-size:1.3em;
+        margin-top:1.4em;
+    }
+}
+
+
+@media (min-width:551px) and (max-width:680px) {
+    .redhat-box {
+        height:50px;
+        bottom:2.1em;
+    }
+    
+    .redhat-shadowman-logo {
+        width:165px;
+        height:100%; 
+}
+
+    .redhat-hashtag {    
+        font-size:1.1em;
+        margin-top:1.3em;
+}
+}
+
+
+@media (max-width:550px) {
+    .redhat-box {
+        height:50px;
+        bottom:2.2em;
+    }
+    
+    .redhat-shadowman-logo {
+        width:165px;
+        height:100%; 
+    }
+
+    .redhat-hashtag {
+        /* If text is displayed, this would be correct size */
+        font-size:1.1em;
+        margin-top:1.3em;
+        display:none;
+    }   
+}
+
+

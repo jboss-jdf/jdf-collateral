@@ -1,0 +1,309 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald|Bangers|Press+Start+2P|Raleway+Dots|Vollkorn|Abril+Fatface);
+/**
+ * Red Hat theme for reveal.js.
+ *
+ * Copyright (C) 2011-2012 Matt Hicks
+ */
+@font-face {
+    font-family: 'OverpassBold';
+    src: url("/lib/font/overpass-bold-wf.eot");
+    src: url("/lib/font/overpass-bold-wf.eot?#iefix") format("eot"), url("/lib/font/overpass-bold-wf.woff") format("woff"), url("/lib/font/overpass-bold-wf.ttf") format("truetype"), url("/lib/font/overpass-bold-wf.svg#webfontzRhIMntw") format("svg");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Overpass';
+    src: url("/lib/font/overpass-wf.eot");
+    src: url("/lib/font/overpass-wf.eot?#iefix") format("eot"), url("/lib/font/overpass-wf.woff") format("woff"), url("/lib/font/overpass-wf.ttf") format("truetype"), url("/lib/font/overpass-wf.svg#webfontiqWxLEM5") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body {
+    background: #e3e3e3;
+    background: -moz-radial-gradient(center, circle cover, white 0%, #e3e3e3 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #e3e3e3));
+    background: -webkit-radial-gradient(center, circle cover, white 0%, #e3e3e3 100%);
+    background: -o-radial-gradient(center, circle cover, white 0%, #e3e3e3 100%);
+    background: -ms-radial-gradient(center, circle cover, white 0%, #e3e3e3 100%);
+    background: radial-gradient(center, circle cover, white 0%, #e3e3e3 100%);
+}
+
+.reveal {
+    font-family: "Overpass", sans-serif;
+    font-size: 36px;
+    font-weight: 200;
+    letter-spacing: -0.02em;
+    color: #333333;
+}
+
+::selection {
+    color: white;
+    background: #134674;
+    text-shadow: none;
+}
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+    margin: 0 0 20px 0;
+    color: black;
+    font-family: "Overpass", sans-serif;
+    line-height: 0.9em;
+    letter-spacing: -0.05em;
+    text-transform: none;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.reveal h1 {
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+}
+
+/*********************************************
+ * LINKS
+ *********************************************/
+.reveal a:not(.image) {
+    color: #3b759e;
+    text-decoration: none;
+    -webkit-transition: color .15s ease;
+    -moz-transition: color .15s ease;
+    -ms-transition: color .15s ease;
+    -o-transition: color .15s ease;
+    transition: color .15s ease;
+}
+
+.reveal a:not(.image):hover {
+    color: #74a7cb;
+    text-shadow: none;
+    border: none;
+    border-radius: 2px;
+}
+
+.reveal .roll span:after {
+    color: #fff;
+    background: #264c66;
+}
+
+/*********************************************
+ * IMAGES
+ *********************************************/
+
+.reveal section img {
+    margin: 15px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 4px solid #333333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    -ms-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    transition: all .2s linear;
+}
+
+.reveal a:hover img {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #3b759e;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+}
+
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls a {
+    color: #333333;
+}
+
+.reveal .controls a.enabled {
+    color: #74a7cb;
+    text-shadow: 0px 0px 2px rgba(144, 207, 213, 0.3);
+}
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.reveal .progress span {
+    background: #3b759e;
+    -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    -ms-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    -o-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+}
+
+.reveal {
+    letter-spacing: -0.05em;
+}
+
+.footer {
+    color: black;
+    font-family: 'Overpass';
+}
+
+.reveal h1 {
+    font-size: 5em;
+}
+
+.reveal h2 {
+    font-size: 3em;
+}
+
+.reveal h3 {
+    font-size: 2em;
+}
+
+.reveal h4 {
+    font-size: 1.5em;
+}
+
+.intro h2 {
+    margin: 0 0 40px 0;
+}
+
+/* Default image styling - set minimum height */
+.reveal section img {
+    border: none;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* An image without the box shadow */
+.reveal img.noshadow {
+    box-shadow: none;
+}
+
+h1.invert,
+h2.invert,
+h3.invert,
+h4.invert {
+    color: white;
+    text-shadow: 0px 0px 10px black;
+}
+
+h1.middle {
+    margin-top: 200px;
+}
+
+h2.middle {
+    margin-top: 225px;
+}
+
+h3.middle {
+    margin-top: 250px;
+}
+
+h4.middle {
+    margin-top: 275px;
+}
+
+h1.middle2 {
+    margin-top: 150px;
+}
+
+h2.middle2 {
+    margin-top: 175px;
+}
+
+h3.middle2 {
+    margin-top: 200px;
+}
+
+h4.middle2 {
+    margin-top: 225px;
+}
+
+.reveal .displayed {
+    opacity: 0.3;
+}
+
+.reveal .typing {
+    font-family: 'Courier';
+    font-weight: bold;
+}
+
+.reveal .computer {
+    font-family: 'Press Start 2P';
+}
+
+.reveal .comic {
+    font-family: 'Bangers';
+    letter-spacing: 0em;
+}
+
+.reveal .spoken {
+    font-family: 'Oswald';
+}
+
+.reveal .quote {
+    font-family: 'Vollkorn';
+}
+
+.reveal p.quote, .reveal div.quote p {
+    text-align: left;
+}
+
+.reveal .date {
+    font-family: 'Abril Fatface';
+}
+
+.reveal .dotted {
+    font-family: 'Raleway Dots';
+    letter-spacing: 0.1em;
+    word-spacing: 0.3em;
+}
+
+.reveal li:first-child {
+    margin-top: 20px;
+}
+
+.reveal ul li {
+    margin-bottom: 10px;
+    list-style: circle;
+}
+
+.reveal ul.center {
+    text-align: center;
+    margin: 0px;
+}
+
+/* hide vertical scrollbar */
+html {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+}
+
+.authors {
+   margin-top: 50px;
+   .author {
+    margin-top: 0px;
+    position: relative;
+    .role {
+     font-size: .7em;
+     margin-bottom: 0px;
+     margin-left: 50px;
+    }
+    .handle {
+     position: absolute;
+     top: 0px;
+     right: 0px;
+     font-size: .7em;
+     a { 
+       padding-top:18px;
+     }
+    }
+   }
+  }
+
