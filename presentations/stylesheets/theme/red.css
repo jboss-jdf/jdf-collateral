@@ -119,6 +119,7 @@ body {
 
 .reveal
 {
+
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -188,6 +189,3 @@ section.title .title-author
     text-align: left;
     margin-left: 3em;
 }
-
-
-
