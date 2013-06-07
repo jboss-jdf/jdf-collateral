@@ -1,0 +1,44 @@
+/* JDF specific overrides / styles */
+
+.authors {
+   margin-top: 50px;
+   .author {
+    margin-top: 0px;
+    position: relative;
+    .role {
+     font-size: .7em;
+     margin-bottom: 0px;
+     margin-left: 50px;
+    }
+    .handle {
+     position: absolute;
+     top: 0px;
+     right: 0px;
+     font-size: .7em;
+     a { 
+       padding-top:18px;
+     }
+    }
+   }
+  }
+
+.reveal blockquote:after {
+  content: '';
+}
+
+.reveal blockquote:before {
+  content: '';
+}
+
+.pull-left {
+  float: left;
+}
+
+.centered {
+  text-align: center;
+}
+
+.reveal section img {
+  border: 0px;
+}
+

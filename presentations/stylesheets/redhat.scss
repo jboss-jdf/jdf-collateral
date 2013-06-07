@@ -285,25 +285,3 @@ html {
     overflow-y: hidden !important;
 }
 
-.authors {
-   margin-top: 50px;
-   .author {
-    margin-top: 0px;
-    position: relative;
-    .role {
-     font-size: .7em;
-     margin-bottom: 0px;
-     margin-left: 50px;
-    }
-    .handle {
-     position: absolute;
-     top: 0px;
-     right: 0px;
-     font-size: .7em;
-     a { 
-       padding-top:18px;
-     }
-    }
-   }
-  }
-
