@@ -23,42 +23,42 @@
 
 /** BLUE **/
 .blue-basic .reveal {
-    background-image: url("/images/blue_basic.png");
+    background-image: url("../../images/blue_basic.png");
 }
 
 .blue-text .reveal {
-    background-image: url("/images/blue_globe.png");
+    background-image: url("../../images/blue_globe.png");
 }
 
 
 /** GREEN **/
 .green-basic .reveal {
-    background-image: url("/images/green_basic.png");
+    background-image: url("../../images/green_basic.png");
 }
 
 .green-text .reveal {
-    background-image: url("/images/green_globe.png");
+    background-image: url("../../images/green_globe.png");
 }
 
 
 /** ORANGE **/
 .orange-basic .reveal {
-    background-image: url("/images/orange_basic.png");
+    background-image: url("../../images/orange_basic.png");
 }
 
 .orange-text .reveal {
-    background-image: url("/images/orange_globe.png");
+    background-image: url("../../images/orange_globe.png");
 }
 
 
 
 /** GREY **/
 .grey-basic .reveal {
-    background-image: url("/images/grey_basic.png");
+    background-image: url("../../images/grey_basic.png");
 }
 
 .grey-text .reveal {
-    background-image: url("/images/grey_with_text.png");
+    background-image: url("../../images/grey_with_text.png");
 }
 
 
