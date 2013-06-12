@@ -50,7 +50,7 @@ This section of the script creates a new app from scratch from Forge, imports it
    @Size(message = "Must be > 5 and < 50", min = 5, max = 50)
    private String name;
 
-   @ManyToMany
+   @OneToMany
    private Collection<Attendee> speakers = new ArrayList<Attendee>();
 
 --------------------------------------------------------------------------
