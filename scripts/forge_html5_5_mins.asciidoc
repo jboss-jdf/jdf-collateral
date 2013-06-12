@@ -1,0 +1,93 @@
+Zero to HTML5 app running in the cloud in 10 mins
+=================================================
+
+Prerequisites
+-------------
+
+* OpenShift set up - account created, domain set up, ssh keys registered. See link:http://openshift.com for more.
+* JBDS 5 setup
+* JBoss server available in JBDS
+* `openshift` plugin installed in Forge
+* `as7` plugin installed in forge
+* Forge launched in JBDS *Cmd + 4*
+* Switch to JBoss perspective
+* Add the event you are attending + presenters names to `import.sql`
+* Make sure you have the app created on OpenShift
+
+Once forge is started
+---------------------
+* `set ACCEPT_DEFAULTS true` in Forge to make it a bit less verbose
+
+Create an app
+-------------
+
+This section of the script creates a new app from scratch from Forge, imports it into JBDS, and adds the key Java EE 6 technologies. It adds some pre-canned entities, and scaffolds JAX-RS endpoints.
+
+1. In the forge console, create a new Project
+
+    new-project --named rhsessions --topLevelPackage com.redhat.sessions
+
+2. Now, we'll add some capabilities - Servlet, CDI, JPA, Bean Validation, JAX-RS
+
+    servlet setup; beans setup; persistence setup --provider HIBERNATE --container JBOSS_AS7; validation setup --provider JAVA_EE; rest setup
+
+3. Now let's add some entities
+
+    entity --named Attendee
+    entity --named Session
+
+4. Now, we want to add some Bean Validation constraints. You should end up with field definitions like these.
+
+
+   In `Session`:
++
+[source,java]
+---------------------------------------------------------------------------
+   @Size(message = "Must be > 20 and < 1000", min = 20, max = 1000)
+   private String description;
+
+   @NotNull
+   @Size(message = "Must be > 5 and < 50", min = 5, max = 50)
+   private String name;
+
+   @ManyToMany
+   private Collection<Attendee> speakers = new ArrayList<Attendee>();
+
+--------------------------------------------------------------------------
+
+   In `Attendee`:
++
+[source,java]
+--------------------------------------------------------------------------
+   @NotNull
+   @Size(message = "Must be > 5 and < 50", min = 5, max = 50)
+   private String name;
+
+--------------------------------------------------------------------------
++
+5. Now, copy in `rad/import.sql` to `src/main/resources`. Some sample data for our app.
+
+6. Scaffold endpoints for the entity.
+
+    cd ~~
+    rest endpoint-from-entity --contentType application/json com.redhat.sessions.model.*
+
+7. Start the JBoss server in Eclipse 
+
+8. Drag and drop app to the JBoss server in Eclipse
+
+9. Open up JAX-RS REST Web Services, and locate `GET /rest/session`. Right click on it, and choose *Run As -> Run On Server*. In the Web Service Tester, click the *Play* button, and show the result
+
+10. Change the URL to `http://localhost:8080/acme/rest/session/1` and show the result
+
+Add HTML5 Mobile view
+---------------------
+
+1. Setup HTML5 scaffolding
+
+    scaffold-x setup --scaffoldType angularjs
+
+2. Generate the CRUD
+
+    scaffold-x from src/main/java/com/redhat/sessions/model/*
+
