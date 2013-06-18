@@ -1,24 +1,39 @@
 <!doctype html>
 %html(lang="en")
   %head
-    %meta(charset="utf-8")
+    %title= (page.title ? (page.site_title ? page.site_title : page.title) : site.title)
+    %meta(name="description"){:content=>page.description ? page.description : site.description}
+    - if site.keywords
+      %meta(name="keywords"){:content=>site.keywords}
+    - if page.author
+      %meta(name="author"){:content=>page.author ? page.author : site.author}
+    - if site.noindex
+      %meta(name="robots" content="noindex")
+    - if site.url
+      %link(rel="canonical"){:href=>site.url}
 
-    %title=page.title
+    %meta{ :name=>"apple-mobile-web-app-capable", :content=>"yes"}
+    %meta{ :name=>"apple-mobile-web-app-status-bar-style", :content=>"black-translucent"}
 
-    %meta{:name=>"description", :content=>page.description}
-    %meta{:name=>"author", :content=>page.author}
+    %meta{ :name=>"viewport", :content=>"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
 
-    %meta(name="apple-mobile-web-app-capable" content="yes")
-    %meta(name="apple-mobile-web-app-status-bar-style" content="black-translucent")
+    %link{ :rel=>'stylesheet', :type=>'text/css', :href=>"#{site.base_url}/stylesheets/reveal.css", :media=>'screen, projection' }
+    %link{ :rel=>'stylesheet', :type=>'text/css', :href=>"#{site.base_url}/stylesheets/redhat.css"}
+    %link{ :rel=>'stylesheet', :type=>'text/css', :href=>"#{site.base_url}/stylesheets/theme/red.css", :id=>'theme'}
+    %link{ :rel=>'stylesheet', :type=>'text/css', :href=>"#{site.base_url}/stylesheets/theme/multi.css"}
+    %link{ :rel=>'stylesheet', :type=>'text/css', :href=>"#{site.base_url}/stylesheets/jdf.css"}
 
-    %link(href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css')
+    -# For syntax highlighting
+    %link{ :rel=>'stylesheet', :href=>"#{site.base_url}/lib/css/zenburn.css"}
 
-    %link(rel="stylesheet" href="#{site.base_url}/stylesheets/reset.css")
-    %link(rel="stylesheet" href="#{site.base_url}/stylesheets/main.css")
-    %link(rel="stylesheet" href="#{site.base_url}/javascripts/google-code-prettify/prettify.css")
-    %link(rel="stylesheet" href="#{site.base_url}/stylesheets/conf.css")
-    %link(rel="stylesheet" href="#{site.base_url}/stylesheets/styles/ir_black.css")
-    %link(rel="stylesheet" href="#{site.base_url}/stylesheets/print.css" media="print")
+    -# If the query includes 'print-pdf', use the PDF print sheet
+    %script
+      document.write( '<link rel="stylesheet" href="#{site.base_url}/stylesheets/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+
+    /[if lt IE 9]
+      %script{ :src=>'lib/js/html5shiv.js'}
+
+
     %link(rel="stylesheet" href="#{site.base_url}/stylesheets/jdf-collateral.css")
   %body
     .reveal
@@ -31,12 +46,7 @@
 
         ~content
 
-      <!-- The navigational controls UI -->
-      %aside.controls
-        %a.left(href="#") &#x25C4;
-        %a.right(href="#") &#x25BA;
-        %a.up(href="#") &#x25B2;
-        %a.down(href="#") &#x25BC;
+
 
   <!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
   .progress
