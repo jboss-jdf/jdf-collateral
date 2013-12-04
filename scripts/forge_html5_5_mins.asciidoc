@@ -1,18 +1,13 @@
-Zero to HTML5 app running in the cloud in 10 mins
-=================================================
+Zero to HTML5 app
+=================
 
 Prerequisites
 -------------
 
-* OpenShift set up - account created, domain set up, ssh keys registered. See link:http://openshift.com for more.
-* JBDS 5 setup
-* JBoss server available in JBDS
-* `openshift` plugin installed in Forge
-* `as7` plugin installed in forge
+* JBDS 7 setup
+* JBoss EAP 6.x server available in JBDS
 * Forge launched in JBDS *Cmd + 4*
 * Switch to JBoss perspective
-* Add the event you are attending + presenters names to `import.sql`
-* Make sure you have the app created on OpenShift
 
 Once forge is started
 ---------------------
@@ -29,7 +24,7 @@ This section of the script creates a new app from scratch from Forge, imports it
 
 2. Now, we'll add some capabilities - Servlet, CDI, JPA, Bean Validation, JAX-RS
 
-    servlet setup; beans setup; persistence setup --provider HIBERNATE --container JBOSS_AS7; validation setup --provider JAVA_EE; rest setup
+    servlet setup; beans setup; persistence setup --provider HIBERNATE --container JBOSS_EAP6; validation setup --provider JAVA_EE; rest setup
 
 3. Now let's add some entities
 
@@ -54,7 +49,11 @@ This section of the script creates a new app from scratch from Forge, imports it
    private Collection<Attendee> speakers = new ArrayList<Attendee>();
 
 --------------------------------------------------------------------------
-
++
+Now generate getters and setters.
++
+Take a copy of the name field from Session, and paste into Attendee
++
    In `Attendee`:
 +
 [source,java]
@@ -65,20 +64,14 @@ This section of the script creates a new app from scratch from Forge, imports it
 
 --------------------------------------------------------------------------
 +
-5. Now, copy in `rad/import.sql` to `src/main/resources`. Some sample data for our app.
-
+Now generate getters and setters.
++
 6. Scaffold endpoints for the entity.
 
     cd ~~
     rest endpoint-from-entity --contentType application/json com.redhat.sessions.model.*
 
-7. Start the JBoss server in Eclipse 
-
-8. Drag and drop app to the JBoss server in Eclipse
-
-9. Open up JAX-RS REST Web Services, and locate `GET /rest/session`. Right click on it, and choose *Run As -> Run On Server*. In the Web Service Tester, click the *Play* button, and show the result
-
-10. Change the URL to `http://localhost:8080/acme/rest/session/1` and show the result
+7. Open up JAX-RS REST Web Services, and locate `GET /rest/session`. Right click on it, and choose *Run As -> Run On Server*. In the Web Service Tester, click the *Play* button, and show the result
 
 Add HTML5 Mobile view
 ---------------------
