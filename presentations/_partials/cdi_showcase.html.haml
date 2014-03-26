@@ -1,0 +1,21 @@
+---
+---
+
+= partial('title.html.haml', {'title'=>page.parent.title, 'subtitle'=>page.parent.subtitle, 'authors'=>page.parent.authors, 'splash'=>page.parent.splash, 'presentation_date'=>page.parent.presentation_date})
+
+%section
+  %h2 Session Objective
+  %blockquote
+    :markdown
+      By the end of this session you have a good grip of CDI fundamentals.
+
+%section
+  %h2 Q&A
+  %ul
+    %li
+      %a(href="http://www.cdi-spec.org/developer") http://www.cdi-spec.org
+    %li
+      %a(href="https://issues.jboss.org/browse/CDI") https://issues.jboss.org/browse/CDI
+    %li
+      %a(href="https://twitter.com/#!/jsr346") @jsr346
+

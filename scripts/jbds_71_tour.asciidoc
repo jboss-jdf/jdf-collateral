@@ -1,0 +1,88 @@
+JBDS 7.1 tour
+=============
+
+Prerequisites
+-------------
+
+* JBDS 7.1 setup
+* Launch /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app/Contents/MacOS/iPhone\ Simulator before starting
+
+JBoss Central
+-------------
+
+1. Start with JBoss Central in JBDS, and explain about quickstarts, and archetypes - best way to get started with JBoss.
+2. Show the Software Update tab, and explain that it's the best way to add both third-party software to JBDS (e.g. JRebel) and also extra JBoss tools (e.g. Cordova, Switchyard etc.)
+
+Archetypes
+----------
+
+1. Explain the JBoss.org Developer program (access to all products free of charge, for development purposes).
+2. New -> HTML5 project. Explaint that this is using a Maven archetype, and is configured to automatically set up and use the Red Hat maven product maven repo.
+3. This creates a demo project, which contains example code - a Java EE backend, with HTML5/JS front end communicating using REST endpoints - for you to look at, if you want to.
+4. Now, select Run As... -> On server. This will open up the Eclipse Browser, to show you the page. Servers have been auto-detected by JBDS - no need to configure them manually.
+
+BrowserSim
+----------
+
+1. Open the BrowserSim tool, and show it running here
+2. Change skins in BrowserSim
+3. Open sync'd windows, and open up an  iPhone 5 in one and a iPad in another
+4. Show the cnn.com site, and show how they have different views for different devices (change the iPad to a Nexus)
+4. Close the second window & change the browser back to <http://localhost:8080/appname>
+5. Start up firebug and then navigate through to the article for the content. Change some CSS and show the effect in BrowserSim. 
+6. Register a member, and show the console log.
+
+
+LiveReload
+----------
+
+1. Add the LiveReload server, and start it
+2. Enable LiveReload in BrowserSim
+4. Resize windows so you can see Eclipse and BrowserSim at the same time
+3. Make a change in the HTML5 and show the auto-update
+
+ScreenShot
+----------
+
+1. Show you can take a screenshot of the mobile device - choose copy to clipboard, and then open in the browser.
+
+Add an HTML5 Page
+-----------------
+
+1. New -> HTML File. Select Next, and make sure that HTML (5) is selected. 
+2. Select HTML5. This page has the jQuery mobile palatte.
+3. Add a page widget. Use this opportunity to explore the wizard that pops up
+4. Note that it automatically adds: js, css as needed; adds a div, with data-role
+5. Add a panel to the created page
+6. Add a list view to the panel
+7. Add some items to the list view - page1, page2, page3
+8. Add a button to open the panel to the page header (URL -> #panel1), select the "bars" icon, and icon only checkbox
+9. Run this in browsersim
+10. Add an about dialog outside the page
+11. Add a button for the about dialog to the top of the footer. The action is "open dialog" and the url is #dialog-1
+12. Add more pages (page 2, page 3)
+13. Add a text input for "name" to page 2, and set some options
+14. Add an email input to page 2, set type to email
+15. Add a tel input to page 2, set type to email
+16. Add a date input for birthday to page 2, set type to date
+17. Add a collapsible set, and label some e.g. Favourite TV shows
+18. Show in iOS simulator in XCode
+
+Cordova
+-------
+
+1. New Hybrid Mobile project. Show that certain validations, such as name length, exist. Set the id to com.acme.app
+2. Explain the structure. The wwwdir needs to contain all the files used by the app. The config.xml is used to configure the application. The merges directory allows you to apply platform specific overrides - e.g. add an ios subdirectory which will be used for ios. The plugins directory is where any Cordova plugins appear. More about plugins later
+3. Two simulation options - either on the ios simulator (DON'T show this) or the more agile cordova sim (show this). 
+4. The Cordova sim provides a management console where you can configure the emulation - e.g. set the location of the device, set the orientation.
+5. The Cordova sim also allows you to live reload pages. *First enable the LiveReload server*, and enable LiveReload(?). Then edit the index.html and the css. Resize the windows so you can see everything.
+6. JBDS allows you to easily install Cordova plugins. Right click on plugin, and use the discovery wizard. You can select from a registry, or install from git or a directory.
+7. Install the Cordova device plugin, and hit next to show you can install other versions.- you can now see it's configuration in the properties view
+8. Give the h1, in the example page, an id of "heading"
+9. Add to the index.js file, deviceReady function
+    var element = document.getElementById('heading');
+    element.innerHTML = "Running Cordova version: " + device.cordova;
+10. Run this on the iOS emulator, to check it is working
+11. Export the project (explain export Mobile vs export native). Export to Native and then iOS, and open in XCode
+
+
